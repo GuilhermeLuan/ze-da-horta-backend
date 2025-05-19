@@ -9,6 +9,9 @@ import {
 import { UserRole } from '../../user/entities/user-role';
 
 export class RegisterDto {
+  @IsNotEmpty({ message: 'O nome não pode estar vazio.' })
+  name: string;
+
   @IsEmail({}, { message: 'Formato de e-mail inválido.' })
   @IsNotEmpty({ message: 'O e-mail não pode estar vazio.' })
   email: string;

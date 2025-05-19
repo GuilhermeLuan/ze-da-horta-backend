@@ -1,11 +1,39 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RegisterDto } from '../auth/dto/auth.dto';
+import { User } from './entities/user.entity';
+import { UserRole } from './entities/user-role';
+import { ClientProfile } from './entities/client-profile.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+  ) {}
+
+  async create(dto: RegisterDto): Promise<User> {
+    const newUser = new User();
+    newUser.name = dto.name;
+    newUser.email = dto.email;
+    newUser.password = dto.password;
+    newUser.role = dto.role;
+
+    if (dto.role == UserRole.CLIENT) {
+      console.log('Creating a client profile');
+      const clientProfile = new ClientProfile();
+
+      if (dto.cpf) {
+        clientProfile.cpf = dto.cpf;
+      }
+
+      newUser.clientProfile = clientProfile;
+    }
+
+    const userToSave = this.userRepository.create(newUser);
+    return this.userRepository.save(userToSave);
   }
 
   findAll() {

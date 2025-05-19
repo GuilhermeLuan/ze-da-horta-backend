@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from '../user/entities/user.entity';
+import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from 'bcrypt';
+import { LoginDto, RegisterDto } from './dto/auth.dto';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class AuthService {
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  constructor(
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
+    private readonly jwtService: JwtService,
+    private readonly userService: UserService,
+  ) {}
+
+  async register(dto: RegisterDto): Promise<User> {
+    // const user = this.userRepository.create(dto);
+    // return this.userRepository.save(user);
+    return this.userService.create(dto);
   }
 
-  findAll() {
-    return `This action returns all auth`;
+  async login(dto: LoginDto): Promise<{ access_token: string }> {
+    const user = await this.userRepository.findOne({
+      where: { email: dto.email },
+    });
+
+    if (!user || !(await bcrypt.compare(dto.password, user.password))) {
+      throw new UnauthorizedException('Credenciais inválidas');
+    }
+    const payload = { sub: user.id, user: user.email };
+
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
-
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+  async validateUser(email: string, senha: string): Promise<User | null> {
+    const user = await this.userRepository.findOne({
+      where: { email: email },
+    });
+    if (user && (await bcrypt.compare(senha, user.password))) {
+      return user;
+    }
+    return null;
   }
 }

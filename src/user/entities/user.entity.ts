@@ -15,7 +15,7 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ unique: true })
+  @Column()
   name: string;
 
   @Column({ unique: true })
@@ -24,7 +24,10 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: 'enum', enum: UserRole })
+  @Column({
+    type: 'simple-enum',
+    enum: UserRole,
+  })
   role: UserRole;
   @OneToOne(() => ClientProfile, (clientProfile) => clientProfile.user, {
     cascade: true,

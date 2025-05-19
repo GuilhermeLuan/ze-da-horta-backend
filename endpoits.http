@@ -1,0 +1,20 @@
+### Realizar cadastro
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Guilherme Luan",
+  "email": "guilherme@pm.me",
+  "password": "teste123456444447",
+  "role": "cliente",
+  "cpf": "123456678"
+}
+
+### Realizar login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "guilhermeluan@pm.me",
+  "password": "teste12345667"
+}
