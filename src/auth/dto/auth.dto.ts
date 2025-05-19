@@ -1,4 +1,3 @@
-import { UserRole } from '../entities/user-role';
 import {
   IsEmail,
   IsEnum,
@@ -7,8 +6,9 @@ import {
   MinLength,
   ValidateIf,
 } from 'class-validator';
+import { UserRole } from '../../user/entities/user-role';
 
-export class CreateUserDto {
+export class RegisterDto {
   @IsEmail({}, { message: 'Formato de e-mail inválido.' })
   @IsNotEmpty({ message: 'O e-mail não pode estar vazio.' })
   email: string;
@@ -39,4 +39,11 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'CNPJ é obrigatório para produtores.' })
   @IsString({ message: 'CNPJ deve ser um texto.' })
   cnpj?: string;
+}
+
+export class LoginDto {
+  @IsString()
+  email: string;
+  @IsString()
+  password: string;
 }

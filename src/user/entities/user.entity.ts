@@ -8,12 +8,7 @@ import {
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ClientProfile } from './client-profile.entity';
-
-export enum UserRole {
-  DELIVERY = 'entregador',
-  CLIENT = 'cliente',
-  PRODUCER = 'produtor',
-}
+import { UserRole } from './user-role';
 
 @Entity()
 export class User {
