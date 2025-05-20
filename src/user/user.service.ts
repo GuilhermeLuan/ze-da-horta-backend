@@ -1,20 +1,23 @@
-import { Injectable } from '@nestjs/common';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RegisterDto } from '../auth/dto/auth.dto';
 import { User } from './entities/user.entity';
 import { UserRole } from './entities/user-role';
 import { ClientProfile } from './entities/client-profile.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UpdateAuthDto } from '../auth/dto/update-auth.dto';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    // private readonly clientProfileRepository: Repository<ClientProfile>,
   ) {}
 
   async create(dto: RegisterDto): Promise<User> {
+    await this.assertThatEmailAlreadyExists(dto.email);
+
     const newUser = new User();
     newUser.name = dto.name;
     newUser.email = dto.email;
@@ -36,19 +39,56 @@ export class UserService {
     return this.userRepository.save(userToSave);
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAll(): Promise<User[]> {
+    return this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number): Promise<User> {
+    const user = await this.userRepository.findOneBy({ id });
+
+    if (!user) {
+      throw new NotFoundException(`User with id ${id} not found`);
+    }
+
+    return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async findOneByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      where: { email },
+      relations: ['clientProfile'],
+    });
+
+    if (!user) {
+      throw new NotFoundException(`User with email ${email} not found`);
+    }
+
+    return user;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async update(id: number, updateUserDto: UpdateAuthDto): Promise<User> {
+    const userToUpdate = await this.findOne(id);
+    Object.assign(userToUpdate, updateUserDto);
+
+    return this.userRepository.save(userToUpdate);
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.assertThatUserExists(id);
+    await this.userRepository.delete(id);
+  }
+
+  async assertThatUserExists(id: number): Promise<void> {
+    await this.findOne(id);
+  }
+
+  async assertThatEmailAlreadyExists(email: string): Promise<void> {
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
+
+    if (user) {
+      throw new NotFoundException(`User with email ${email} already exists`);
+    }
   }
 }

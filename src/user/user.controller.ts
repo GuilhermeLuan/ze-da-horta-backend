@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -21,14 +22,17 @@ export class UserController {
     return this.userService.create(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.userService.findAll();
+  @Get(':id')
+  findOne(@Param('id') id: string): Promise<User> {
+    return this.userService.findOne(+id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.userService.findOne(+id);
+  @Get()
+  getUsers(@Query('email') email: string) {
+    if (email) {
+      return this.userService.findOneByEmail(email);
+    }
+    return this.userService.findAll();
   }
 
   @Patch(':id')
