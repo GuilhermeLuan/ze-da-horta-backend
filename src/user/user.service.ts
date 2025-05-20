@@ -12,7 +12,6 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    // private readonly clientProfileRepository: Repository<ClientProfile>,
   ) {}
 
   async create(dto: RegisterDto): Promise<User> {
@@ -30,6 +29,7 @@ export class UserService {
 
       if (dto.cpf) {
         clientProfile.cpf = dto.cpf;
+        await this.assertThatCpfAlreadyExists(dto.cpf);
       }
 
       newUser.clientProfile = clientProfile;
@@ -89,6 +89,18 @@ export class UserService {
 
     if (user) {
       throw new NotFoundException(`User with email ${email} already exists`);
+    }
+  }
+
+  async assertThatCpfAlreadyExists(cpf: string): Promise<void> {
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.clientProfile', 'clientProfile')
+      .where('clientProfile.cpf = :cpf', { cpf })
+      .getOne();
+
+    if (user) {
+      throw new NotFoundException(`User with CPF ${cpf} already exists`);
     }
   }
 }
