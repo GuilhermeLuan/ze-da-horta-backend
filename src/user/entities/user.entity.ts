@@ -10,6 +10,7 @@ import * as bcrypt from 'bcrypt';
 import { ClientProfile } from './client-profile.entity';
 import { UserRole } from './user-role';
 import { ProducerProfile } from './producer-profile.entity';
+import { CourierProfile } from './courier-profile.entity';
 
 @Entity()
 export class User {
@@ -44,6 +45,13 @@ export class User {
     eager: true,
   })
   producerProfile?: ProducerProfile;
+
+  @OneToOne(() => CourierProfile, (courierProfile) => courierProfile.user, {
+    cascade: true,
+    nullable: true,
+    eager: true,
+  })
+  courierProfile?: CourierProfile;
 
   @BeforeInsert()
   @BeforeUpdate()
