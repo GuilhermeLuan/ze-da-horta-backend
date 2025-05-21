@@ -16,14 +16,14 @@ export class CourierProfile {
   @Column({ unique: true, nullable: true })
   cnh?: string;
 
+  @Column({ unique: true, nullable: false })
+  cpf?: string;
+
   @Column({
     type: 'simple-enum',
     enum: VehicleType,
   })
   vehicleType: VehicleType;
-
-  @Column()
-  vehiclePlate?: string;
 
   @OneToOne(() => User, (user) => user.courierProfile)
   @JoinColumn()

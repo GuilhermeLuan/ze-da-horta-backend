@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateAuthDto } from '../auth/dto/update-auth.dto';
 import { ProducerProfile } from './entities/producer-profile.entity';
+import { CourierProfile } from './entities/courier-profile.entity';
 
 @Injectable()
 export class UserService {
@@ -46,6 +47,27 @@ export class UserService {
       }
 
       newUser.producerProfile = producerProfile;
+    }
+
+    if (dto.role == UserRole.COURIER) {
+      console.log('Creating a courier profile');
+      const courierProfile = new CourierProfile();
+
+      if (dto.cpf) {
+        await this.assertThatCpfAlreadyExists(dto.cpf);
+        courierProfile.cpf = dto.cpf;
+      }
+
+      if (dto.cnh) {
+        courierProfile.cnh = dto.cnh;
+        await this.assertThatCnhAlreadyExists(dto.cnh);
+      }
+
+      if (dto.vehicleType) {
+        courierProfile.vehicleType = dto.vehicleType;
+      }
+
+      newUser.courierProfile = courierProfile;
     }
 
     const userToSave = this.userRepository.create(newUser);
@@ -106,6 +128,9 @@ export class UserService {
   }
 
   async assertThatCpfAlreadyExists(cpf: string): Promise<void> {
+    // TODO: Esse método não está funcionando corretamente - por que ele não verifica todos os CPF
+    // cadastrados, apenas os dos clientes.
+
     const user = await this.userRepository
       .createQueryBuilder('user')
       .leftJoinAndSelect('user.clientProfile', 'clientProfile')
@@ -127,5 +152,9 @@ export class UserService {
     if (user) {
       throw new NotFoundException(`User with CNPJ ${cnpj} already exists`);
     }
+  }
+
+  async assertThatCnhAlreadyExists(cnh: string) {
+    // TODO: Implement this method
   }
 }

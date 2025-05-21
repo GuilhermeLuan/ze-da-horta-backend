@@ -1,5 +1,5 @@
 export enum UserRole {
-  DELIVERY = 'entregador',
+  COURIER = 'entregador',
   CLIENT = 'cliente',
   PRODUCER = 'produtor',
 }
