@@ -1,4 +1,4 @@
-import { UserRole } from '../entities/user-role';
+import { UserRole } from '../entities/enums/user-role';
 import {
   IsEmail,
   IsEnum,

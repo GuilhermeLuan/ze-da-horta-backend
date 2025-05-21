@@ -6,7 +6,7 @@ import {
   MinLength,
   ValidateIf,
 } from 'class-validator';
-import { UserRole } from '../../user/entities/user-role';
+import { UserRole } from '../../user/entities/enums/user-role';
 
 export class RegisterDto {
   @IsNotEmpty({ message: 'O nome não pode estar vazio.' })

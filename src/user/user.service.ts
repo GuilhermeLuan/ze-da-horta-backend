@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { RegisterDto } from '../auth/dto/auth.dto';
 import { User } from './entities/user.entity';
-import { UserRole } from './entities/user-role';
+import { UserRole } from './entities/enums/user-role';
 import { ClientProfile } from './entities/client-profile.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';

@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { VehicleType } from './enums/vehicle-type';
 
 @Entity()
 export class CourierProfile {
@@ -14,6 +15,15 @@ export class CourierProfile {
 
   @Column({ unique: true, nullable: true })
   cnh?: string;
+
+  @Column({
+    type: 'simple-enum',
+    enum: VehicleType,
+  })
+  vehicleType: VehicleType;
+
+  @Column()
+  vehiclePlate?: string;
 
   @OneToOne(() => User, (user) => user.courierProfile)
   @JoinColumn()
