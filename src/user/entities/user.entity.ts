@@ -9,6 +9,7 @@ import {
 import * as bcrypt from 'bcrypt';
 import { ClientProfile } from './client-profile.entity';
 import { UserRole } from './user-role';
+import { ProducerProfile } from './producer-profile.entity';
 
 @Entity()
 export class User {
@@ -29,12 +30,20 @@ export class User {
     enum: UserRole,
   })
   role: UserRole;
+
   @OneToOne(() => ClientProfile, (clientProfile) => clientProfile.user, {
     cascade: true,
     nullable: true,
     eager: true,
   })
   clientProfile?: ClientProfile;
+
+  @OneToOne(() => ProducerProfile, (producerProfile) => producerProfile.user, {
+    cascade: true,
+    nullable: true,
+    eager: true,
+  })
+  producerProfile?: ProducerProfile;
 
   @BeforeInsert()
   @BeforeUpdate()

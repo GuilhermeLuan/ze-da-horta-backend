@@ -6,6 +6,7 @@ import { ClientProfile } from './entities/client-profile.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UpdateAuthDto } from '../auth/dto/update-auth.dto';
+import { ProducerProfile } from './entities/producer-profile.entity';
 
 @Injectable()
 export class UserService {
@@ -33,6 +34,18 @@ export class UserService {
       }
 
       newUser.clientProfile = clientProfile;
+    }
+
+    if (dto.role == UserRole.PRODUCER) {
+      console.log('Creating a producer profile');
+      const producerProfile = new ProducerProfile();
+
+      if (dto.cnpj) {
+        await this.assertThatCnpjAlreadyExists(dto.cnpj);
+        producerProfile.cnpj = dto.cnpj;
+      }
+
+      newUser.producerProfile = producerProfile;
     }
 
     const userToSave = this.userRepository.create(newUser);
@@ -101,6 +114,18 @@ export class UserService {
 
     if (user) {
       throw new NotFoundException(`User with CPF ${cpf} already exists`);
+    }
+  }
+
+  async assertThatCnpjAlreadyExists(cnpj: string): Promise<void> {
+    const user = await this.userRepository
+      .createQueryBuilder('user')
+      .leftJoinAndSelect('user.producerProfile', 'producerProfile')
+      .where('producerProfile.cnpj = :cnpj', { cnpj: cnpj })
+      .getOne();
+
+    if (user) {
+      throw new NotFoundException(`User with CNPJ ${cnpj} already exists`);
     }
   }
 }

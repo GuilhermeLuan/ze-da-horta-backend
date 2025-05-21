@@ -1,13 +1,25 @@
-### Realizar cadastro
+### Realizar cadastro do tipo Cliente
 POST http://localhost:3000/auth/register
 Content-Type: application/json
 
 {
   "name": "Guilherme Luan",
-  "email": "guilhermeadadd@dddpm.me",
-  "password": "teste123456444447",
+  "email": "guilhermeluan@pm.me",
+  "password": "teste123456",
   "role": "cliente",
   "cpf": "123456678177"
+}
+
+### Realizar cadastro do tipo Produtor
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Guilherme Luan",
+  "email": "guilhermeluanprodutor1@pm.me",
+  "password": "teste123456",
+  "role": "produtor",
+  "cnpj": "123456678171127"
 }
 
 ### Realizar login
@@ -15,8 +27,8 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "guilhermeadad@pm.me",
-  "password": "teste123456444447"
+  "email": "guilhermeluanprodutor1@pm.me",
+  "password": "teste123456"
 }
 
 ### Buscar usuários
@@ -24,13 +36,13 @@ GET http://localhost:3000/user
 
 
 ### Buscar usuário pelo email (sem encoding)
-GET http://localhost:3000/user?email=guilherme@pm.me
+GET http://localhost:3000/user?email=guilhermeluan@pm.me"
 
 ### Buscar usuário pelo id
-GET http://localhost:3000/user/2
+GET http://localhost:3000/user/3
 
 ### Modifcar
-PATCH http://localhost:3000/user/2
+PATCH http://localhost:3000/user/1
 Content-Type: application/json
 
 {
