@@ -1,4 +1,4 @@
-import { UserRole } from '../entities/user-role';
+import { UserRole } from '../entities/enums/user-role';
 import {
   IsEmail,
   IsEnum,
@@ -7,6 +7,7 @@ import {
   MinLength,
   ValidateIf,
 } from 'class-validator';
+import { VehicleType } from '../entities/enums/vehicle-type';
 
 export class CreateUserDto {
   @IsEmail({}, { message: 'Formato de e-mail inválido.' })
@@ -22,16 +23,24 @@ export class CreateUserDto {
   @IsNotEmpty({ message: 'O tipo de usuário (role) não pode estar vazio.' })
   role: UserRole;
 
+  @ValidateIf((object) => object.role === UserRole.COURIER)
+  @IsEnum(VehicleType, { message: 'Tipo de veículo inválido.' })
+  @IsNotEmpty({ message: 'O tipo de veículo não pode estar vazio.' })
+  vehicleType: VehicleType;
+
   @ValidateIf(
     (object) =>
-      object.role === UserRole.CLIENT || object.role === UserRole.DELIVERY,
+      object.role === UserRole.CLIENT || object.role === UserRole.COURIER,
   )
   @IsNotEmpty({ message: 'CPF é obrigatório para clientes e entregadores.' })
   @IsString({ message: 'CPF deve ser um texto.' })
   cpf?: string;
 
-  @ValidateIf((object) => object.role === UserRole.DELIVERY)
-  @IsNotEmpty({ message: 'CNH é obrigatória para entregadores.' })
+  @ValidateIf((object) => object.role === UserRole.COURIER || object.vehicleType === VehicleType.MOTORCYCLE)
+  @IsNotEmpty({
+    message:
+      'CNH é obrigatória para entregadores que utilizam a modalidade de motos.',
+  })
   @IsString({ message: 'CNH deve ser um texto.' })
   cnh?: string;
 

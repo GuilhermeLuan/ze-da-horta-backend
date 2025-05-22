@@ -22,6 +22,32 @@ Content-Type: application/json
   "cnpj": "123456678171127"
 }
 
+### Realizar cadastro do tipo Entregador com Bicicleta
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Guilherme Luan",
+  "email": "guilhermeluan@gmail.com",
+  "password": "teste123456",
+  "role": "entregador",
+  "cpf": "123123121",
+  "vehicleType": "BICYCLE"
+}
+
+### Realizar cadastro do tipo Entregador com Moto
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Guilherme Luan",
+  "email": "guilhermeluan11@gmail.com",
+  "password": "teste123456",
+  "role": "entregador",
+  "cpf": "1231231211",
+  "cnh": "123456678171127",
+  "vehicleType": "MOTORCYCLE"
+}
 ### Realizar login
 POST http://localhost:3000/auth/login
 Content-Type: application/json
