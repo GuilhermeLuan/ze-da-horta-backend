@@ -12,7 +12,6 @@ export class Store {
   @Column()
   rating: number;
 
-
   // Substitua 'any[]' pelo tipo de entidade Product e defina a relação apropriada
   // Exemplo: @OneToMany(() => Product, product => product.store)
   // Products: Product[];
