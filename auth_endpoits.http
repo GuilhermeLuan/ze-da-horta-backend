@@ -16,10 +16,10 @@ Content-Type: application/json
 
 {
   "name": "Guilherme Luan",
-  "email": "guilhermeluanprodutor1@pm.me",
+  "email": "guilhermeluanprodutor11@pm.me",
   "password": "teste123456",
   "role": "produtor",
-  "cnpj": "123456678171127"
+  "cnpj": "1234566781711127"
 }
 
 ### Realizar cadastro do tipo Entregador com Bicicleta
