@@ -15,7 +15,7 @@ export class ProducerProfile {
   @Column({ unique: true, nullable: true })
   cnpj: string;
 
-  @OneToOne(() => User, (user) => user.clientProfile)
+  @OneToOne(() => User, (user) => user.clientProfile, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 }

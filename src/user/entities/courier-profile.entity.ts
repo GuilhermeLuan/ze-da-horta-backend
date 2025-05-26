@@ -25,7 +25,7 @@ export class CourierProfile {
   })
   vehicleType: VehicleType;
 
-  @OneToOne(() => User, (user) => user.courierProfile)
+  @OneToOne(() => User, (user) => user.courierProfile, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 }

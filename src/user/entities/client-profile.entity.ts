@@ -15,7 +15,7 @@ export class ClientProfile {
   @Column({ unique: true, nullable: true })
   cpf: string;
 
-  @OneToOne(() => User, (user) => user.clientProfile)
+  @OneToOne(() => User, (user) => user.clientProfile, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
 }

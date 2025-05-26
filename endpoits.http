@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "Guilherme Luan",
-  "email": "guilhermeluan@pm.me",
+  "email": "guilhermeluan1@pm.me",
   "password": "teste123456",
   "role": "cliente",
   "cpf": "123456678177"
@@ -62,13 +62,13 @@ GET http://localhost:3000/user
 
 
 ### Buscar usuário pelo email (sem encoding)
-GET http://localhost:3000/user?email=guilhermeluan@pm.me"
+GET http://localhost:3000/user?email=guilhermeluan@pm.me
 
 ### Buscar usuário pelo id
 GET http://localhost:3000/user/3
 
 ### Modifcar
-PATCH http://localhost:3000/user/1
+PATCH http://localhost:3000/user/3
 Content-Type: application/json
 
 {
@@ -76,5 +76,5 @@ Content-Type: application/json
 }
 
 ### Deletar usuario
-DELETE http://localhost:3000/user/1
+DELETE http://localhost:3000/user/2
 
