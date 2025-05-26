@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "Guilherme Luan",
-  "email": "guilhermeluan1@pm.me",
+  "email": "guilhermeluan@pm.me",
   "password": "teste123456",
   "role": "cliente",
   "cpf": "123456678177"
@@ -53,7 +53,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "guilhermeluanprodutor1@pm.me",
+  "email": "guilhermeluanprodutor11@pm.me",
   "password": "teste123456"
 }
 

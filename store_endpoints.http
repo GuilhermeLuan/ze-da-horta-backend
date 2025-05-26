@@ -2,12 +2,13 @@
 
 POST http://localhost:3000/store
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODI5OTk3MSwiZXhwIjoxNzQ4MzAzNTcxfQ.LHpk35PrBT-HMO-tNz_fgHLukoC_11SvrZa-dfG2pC4
 //Authorization: Bearer {{token}} // Adicione o token de autenticação aqui
 
 {
   "name": "Loja do Zé",
   "description": "Frutas e verduras frescas direto da horta.",
-  "producerProfileId": 2
+  "producerProfileId": 1
 }
 
 ### Buscar todas as lojas
