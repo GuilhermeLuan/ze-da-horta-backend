@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
@@ -28,7 +29,11 @@ export class ProductsController {
   }
 
   @Get()
-  findAll() {
+  findAllOrFindByName(@Query('name') name?: string) {
+    if (name) {
+      return this.productsService.findByName(name);
+    }
+
     return this.productsService.findAll();
   }
 

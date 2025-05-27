@@ -20,6 +20,9 @@ GET http://localhost:3000/products
 ### Buscar um produto pelo ID
 GET http://localhost:3000/products/1
 
+### Buscar produtos com filtros (name)
+GET http://localhost:3000/products?name=Ba
+
 ### Atualizar um produto
 PATCH http://localhost:3000/products/1
 Content-Type: application/json

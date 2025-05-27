@@ -3,7 +3,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './entities/product.entity';
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { Store } from '../store/entities/store.entity';
 
 @Injectable()
@@ -71,5 +71,19 @@ export class ProductsService {
     return await this.productRepository.find({
       where: { store: { id } },
     });
+  }
+
+  async findByName(name: string): Promise<Product[]> {
+    const products = await this.productRepository.find({
+      where: {
+        name: Like(`%${name}%`),
+      },
+    });
+
+    if (products.length === 0) {
+      throw new NotFoundException(`No products found with name ${name}`);
+    }
+
+    return products;
   }
 }
