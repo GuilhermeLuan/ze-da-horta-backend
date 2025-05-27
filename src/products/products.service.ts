@@ -66,4 +66,10 @@ export class ProductsService {
   async assertThatProductExists(id: number): Promise<void> {
     await this.findOne(id);
   }
+
+  async findProductsByStoreId(id: number): Promise<Product[]> {
+    return await this.productRepository.find({
+      where: { store: { id } },
+    });
+  }
 }
