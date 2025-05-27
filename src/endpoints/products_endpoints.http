@@ -1,0 +1,33 @@
+### Criar um novo produto
+
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+  "name": "Maçã Gala",
+  "description": "Maçã Gala fresca e crocante.",
+  "price": 5.99,
+  "imageUrl": "https://example.com/images/maca_gala.jpg",
+  "rating": 4.5,
+  "category": "Fruta",
+  "storeId": 1
+}
+
+### Buscar todos os produtos
+GET http://localhost:3000/products
+
+### Buscar um produto pelo ID
+GET http://localhost:3000/products/1
+
+### Atualizar um produto
+PATCH http://localhost:3000/products/1
+Content-Type: application/json
+
+{
+  "name": "Maçã Fuji",
+  "price": 6.50
+}
+
+### Deletar um produto
+DELETE http://localhost:3000/products/1
+
