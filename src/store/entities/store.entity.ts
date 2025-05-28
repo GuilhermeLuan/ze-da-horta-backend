@@ -1,12 +1,14 @@
 import {
   Column,
-  Entity,
+  Entity, JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm'; // Adicionar OneToMany
 import { ProducerProfile } from '../../user/entities/producer-profile.entity';
-import { Product } from '../../products/entities/product.entity'; // Importar Product
+import { Product } from '../../products/entities/product.entity';
+import { Stock } from '../../stock/entities/stock.entity'; // Importar Product
 
 @Entity()
 export class Store {
@@ -28,4 +30,11 @@ export class Store {
 
   @Column({ type: 'simple-json', nullable: true }) // Temporário até definir a entidade Order
   Orders: any[];
+
+  @OneToOne(() => Stock, (stock) => stock.store, {
+    cascade: true,
+    eager: true,
+  })
+  @JoinColumn({ name: 'stock_id' })
+  stock: Stock;
 }
