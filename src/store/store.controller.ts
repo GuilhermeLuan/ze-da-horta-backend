@@ -15,10 +15,14 @@ import { AuthGuard } from '@nestjs/passport';
 import { RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../user/entities/enums/user-role';
 import { Roles } from '../auth/roles.decorator';
+import { ProductsService } from '../products/products.service';
 
 @Controller('store')
 export class StoreController {
-  constructor(private readonly storeService: StoreService) {}
+  constructor(
+    private readonly storeService: StoreService,
+    private readonly productsService: ProductsService,
+  ) {}
 
   @Post()
   @UseGuards(AuthGuard('jwt'), RolesGuard)
@@ -37,7 +41,14 @@ export class StoreController {
     return this.storeService.findOne(+id);
   }
 
+  @Get(':storeId/products')
+  async findProductsByStoreId(@Param('storeId') id: string) {
+    return this.productsService.findProductsByStoreId(+id);
+  }
+
   @Patch(':id')
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @Roles(UserRole.PRODUCER)
   update(@Param('id') id: string, @Body() updateStoreDto: UpdateStoreDto) {
     return this.storeService.update(+id, updateStoreDto);
   }

@@ -1,5 +1,12 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm'; // Adicionar OneToMany
 import { ProducerProfile } from '../../user/entities/producer-profile.entity';
+import { Product } from '../../products/entities/product.entity'; // Importar Product
 
 @Entity()
 export class Store {
@@ -12,18 +19,13 @@ export class Store {
   @Column()
   rating: number;
 
-  // Substitua 'any[]' pelo tipo de entidade Product e defina a relação apropriada
-  // Exemplo: @OneToMany(() => Product, product => product.store)
-  // Products: Product[];
-  @Column({ type: 'simple-json', nullable: true }) // Temporário até definir a entidade Product
-  Products: any[];
+  // Relação OneToMany com Product
+  @OneToMany(() => Product, (product) => product.store)
+  products: Product[];
 
   @ManyToOne(() => ProducerProfile, (producerProfile) => producerProfile.stores)
-  producerProfile: ProducerProfile; // Alterado de 'ProducerProfile: any'
+  producerProfile: ProducerProfile;
 
-  // Substitua 'any[]' pelo tipo de entidade Order e defina a relação apropriada
-  // Exemplo: @OneToMany(() => Order, order => order.store)
-  // Orders: Order[];
   @Column({ type: 'simple-json', nullable: true }) // Temporário até definir a entidade Order
   Orders: any[];
 }

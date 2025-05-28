@@ -4,7 +4,6 @@ import { UpdateStoreDto } from './dto/update-store.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Store } from './entities/store.entity';
 import { Repository } from 'typeorm';
-import { ProducerProfile } from '../user/entities/producer-profile.entity';
 import { User } from '../user/entities/user.entity';
 
 @Injectable()

@@ -34,3 +34,5 @@ Content-Type: application/json
 DELETE http://localhost:3000/store/1
 //Authorization: Bearer {{token}} // Adicione o token de autenticação aqui
 
+### Buscar produtos de uma loja pelo ID da loja
+GET http://localhost:3000/store/1/products
