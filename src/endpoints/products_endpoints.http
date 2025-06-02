@@ -1,8 +1,10 @@
 ### Criar um novo produto
 
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODg2MzE3OCwiZXhwIjoxNzQ4ODY2Nzc4fQ.vsoLIsegjZ6JyXEdDkeDPpNP36cpRsJ40qkZ7Fs9NlA
+
 POST http://localhost:3000/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODM2NjM2OSwiZXhwIjoxNzQ4MzY5OTY5fQ.FZ5jpk5om4yChId6-JuMASSdjC4T6daH4JLdpcBqpbY
+Authorization: Bearer {{token}}
 
 {
   "name": "Banana",
@@ -26,6 +28,7 @@ GET http://localhost:3000/products?name=Ba
 ### Atualizar um produto
 PATCH http://localhost:3000/products/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
   "name": "Maçã Fuji",
