@@ -1,9 +1,10 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODg5MjAyOCwiZXhwIjoxNzQ4ODk1NjI4fQ.SQiwUB9wSbBav-9nlkDiffzriGoCYpuZf5iEHD5sWb8
+
 ### Criar uma nova loja
 
 POST http://localhost:3000/store
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODI5OTk3MSwiZXhwIjoxNzQ4MzAzNTcxfQ.LHpk35PrBT-HMO-tNz_fgHLukoC_11SvrZa-dfG2pC4
-//Authorization: Bearer {{token}} // Adicione o token de autenticação aqui
+Authorization: Bearer {{token}}
 
 {
   "name": "Loja do Zé",
@@ -13,11 +14,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiO
 
 ### Buscar todas as lojas
 GET http://localhost:3000/store
-//Authorization: Bearer {{token}} // Adicione o token de autenticação aqui
 
 ### Buscar uma loja pelo ID
 GET http://localhost:3000/store/1
-//Authorization: Bearer {{token}} // Adicione o token de autenticação aqui
 
 ### Atualizar uma loja
 PATCH http://localhost:3000/store/1
