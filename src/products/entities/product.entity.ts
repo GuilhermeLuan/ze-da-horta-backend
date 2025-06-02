@@ -1,6 +1,12 @@
-import { Column, Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Store } from '../../store/entities/store.entity';
-import { StockProduct } from '../../stock-product/entities/stock-product.entity';
+import { InventoryItem } from '../../inventory-items/entities/inventory-item.entity';
 
 @Entity()
 export class Product {
@@ -22,6 +28,6 @@ export class Product {
   @ManyToOne(() => Store, (store) => store.products)
   store: Store;
 
-  @ManyToMany(() => StockProduct, (stockProduct) => stockProduct.product)
-  stockProducts: StockProduct[];
+  @OneToMany(() => InventoryItem, (inventoryItem) => inventoryItem.product)
+  inventoryItems: InventoryItem[];
 }

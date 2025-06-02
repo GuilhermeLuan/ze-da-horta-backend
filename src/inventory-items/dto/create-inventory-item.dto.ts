@@ -1,7 +1,7 @@
-import { Type } from 'class-transformer';
 import { IsNumber, Min } from 'class-validator';
+import { Type } from 'class-transformer';
 
-export class CreateStockProductDto {
+export class CreateInventoryItemDto {
   @IsNumber()
   @Type(() => Number)
   productId: number;

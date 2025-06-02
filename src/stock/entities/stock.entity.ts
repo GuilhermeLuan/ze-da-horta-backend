@@ -6,21 +6,32 @@ import {
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { StockProduct } from '../../stock-product/entities/stock-product.entity';
+import { InventoryItem } from '../../inventory-items/entities/inventory-item.entity';
 
 @Entity()
 export class Stock {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  currentTotalQuantity: number;
+
+  @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
   @OneToOne(() => Store, (store) => store.stock)
   store: Store;
 
-  @OneToMany(() => StockProduct, (stockProduct) => stockProduct.stock, {
+  @OneToMany(() => InventoryItem, (inventoryItems) => inventoryItems.stock, {
     cascade: true,
   })
-  stockProducts: StockProduct[];
+  inventoryItems: InventoryItem[];
+
+  calculateCurrentTotalQuantity(): number {
+    if (!this.inventoryItems) return 0;
+    return this.inventoryItems.reduce(
+      (total, item) => total + item.quantity,
+      0,
+    );
+  }
 }

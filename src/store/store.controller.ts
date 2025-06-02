@@ -59,4 +59,9 @@ export class StoreController {
   remove(@Param('id') id: string) {
     return this.storeService.remove(+id);
   }
+
+  @Get(':id/stock')
+  getStock(@Param('id') id: number) {
+    return this.storeService.getStock(+id);
+  }
 }

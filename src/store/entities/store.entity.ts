@@ -1,6 +1,7 @@
 import {
   Column,
-  Entity, JoinColumn,
+  Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -21,15 +22,11 @@ export class Store {
   @Column()
   rating: number;
 
-  // Relação OneToMany com Product
   @OneToMany(() => Product, (product) => product.store)
   products: Product[];
 
   @ManyToOne(() => ProducerProfile, (producerProfile) => producerProfile.stores)
   producerProfile: ProducerProfile;
-
-  @Column({ type: 'simple-json', nullable: true }) // Temporário até definir a entidade Order
-  Orders: any[];
 
   @OneToOne(() => Stock, (stock) => stock.store, {
     cascade: true,
@@ -37,4 +34,7 @@ export class Store {
   })
   @JoinColumn({ name: 'stock_id' })
   stock: Stock;
+
+  @Column({ type: 'simple-json', nullable: true }) // Temporário até definir a entidade Order
+  Orders: any[];
 }
