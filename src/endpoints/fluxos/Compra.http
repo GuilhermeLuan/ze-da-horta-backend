@@ -1,0 +1,15 @@
+### Buscar produtos
+GET http://localhost:3000/products
+
+### Detalhe do produto
+GET http://localhost:3000/products/1
+
+### Adicionar ao carinho
+
+### Pagamento
+
+### Endereço
+
+### Status
+
+### Avaliar comprar

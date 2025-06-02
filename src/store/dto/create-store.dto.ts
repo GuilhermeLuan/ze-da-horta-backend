@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
+import { CreateStockDto } from '../../stock/dto/create-stock.dto';
 
 export class CreateStoreDto {
   @IsString({ message: 'O nome deve ser um texto.' })
@@ -12,4 +13,7 @@ export class CreateStoreDto {
   @IsNumber({}, { message: 'O ID do perfil do produtor deve ser um número.' })
   @IsNotEmpty({ message: 'O ID do perfil do produtor não pode estar vazio.' })
   producerProfileId: number;
+
+  @IsOptional()
+  stock?: CreateStockDto;
 }

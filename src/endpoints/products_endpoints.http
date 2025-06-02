@@ -1,3 +1,5 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODg5NjA3NiwiZXhwIjoxNzQ4ODk5Njc2fQ.uD5mWEWUveDKU0lEWiOFGXxfO5dg8U-RY0KawB5JWsA
+
 ### Criar um novo produto
 
 @token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODg2MzE3OCwiZXhwIjoxNzQ4ODY2Nzc4fQ.vsoLIsegjZ6JyXEdDkeDPpNP36cpRsJ40qkZ7Fs9NlA
@@ -7,7 +9,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Banana",
+  "name": "Banana 2",
   "description": "Banana orgânica e fresca",
   "price": 5.99,
   "imageUrl": "https://example.com/images/maca_gala.jpg",

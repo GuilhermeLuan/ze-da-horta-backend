@@ -1,0 +1,117 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXIiOiJwcm9kdXRvckBnbWFpbC5jb20iLCJyb2xlIjoicHJvZHV0b3IiLCJpYXQiOjE3NDg5MDIzNTIsImV4cCI6MTc0ODkwNTk1Mn0.BTYzINUUzojmNSEyY2H7rZTJFsygavgm11d_2AQske0
+
+### Realizar cadastro do tipo Produtor
+POST http://localhost:3000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Guilherme Luan",
+  "email": "produtor@gmail.com",
+  "password": "teste123456",
+  "role": "produtor",
+  "cnpj": "123456678171112d7"
+}
+
+### Realizar login
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "produtor@gmail.com",
+  "password": "teste123456"
+}
+
+
+
+### Manter Loja - Para ter acesso a essas rotas, o usuário deve ser um produtos autenticado.
+### Acima estão as rotas para registro e login de produtor.
+
+### Criar uma nova Loja
+POST http://localhost:3000/store
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Loja do Zé",
+  "description": "Frutas e verduras frescas direto da horta.",
+  "producerProfileId": 1
+}
+
+### Atualizar uma loja
+PATCH http://localhost:3000/store/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Loja do Zé Atualizada",
+  "description": "As melhores frutas e verduras da região."
+}
+
+### Manter produtos
+
+### Criar um novo produto
+POST http://localhost:3000/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Banana 2",
+  "description": "Banana orgânica e fresca",
+  "price": 5.99,
+  "imageUrl": "https://example.com/images/maca_gala.jpg",
+  "rating": 4.5,
+  "category": "Fruta",
+  "storeId": 1
+}
+
+### Buscar produtos com filtros (name)
+GET http://localhost:3000/products?name=Ba
+
+### Adicionar produto ao estoque
+POST http://localhost:3000/store/1/inventory-items
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 1,
+  "quantity": 50
+}
+
+### Listar todos os itens no estoque de uma loja
+GET http://localhost:3000/store/1/inventory-items
+Authorization: Bearer {{token}}
+
+
+### Obter resumo do estoque de uma loja
+GET http://localhost:3000/store/1/inventory-items/summary
+Authorization: Bearer {{token}}
+
+### Listar produtos sem estoque de uma loja
+GET http://localhost:3000/store/1/inventory-items/out-of-stock
+Authorization: Bearer {{token}}
+
+### Buscar item de inventário específico pelo ID do produto
+GET http://localhost:3000/store/1/inventory-items/products/1
+Authorization: Bearer {{token}}
+
+### Diminuir a quantidade de um produto no estoque
+PATCH http://localhost:3000/store/1/inventory-items/products/1/decrease
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "quantity": 5
+}
+
+### Aumentar a quantidade de um produto no estoque
+PATCH http://localhost:3000/store/1/inventory-items/products/1/increase
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "quantity": 10
+}
+
+### Remover um produto do estoque
+DELETE http://localhost:3000/store/1/inventory-items/products/1
+Authorization: Bearer {{token}}
