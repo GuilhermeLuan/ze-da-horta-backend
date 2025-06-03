@@ -3,23 +3,29 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { CartItem } from './cart-item.entity';
 
 @Entity()
 export class Cart {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => ClientProfile, (clientProfile) => clientProfile.cart, {
-    onDelete: 'CASCADE',
-  })
-  @JoinColumn()
+  @ManyToOne(() => ClientProfile, { eager: true, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'client_profile_id' })
   clientProfile: ClientProfile;
 
-  @Column('json', { nullable: true }) // ou 'text' se preferir JSON string
-  items: any[]; // Melhor seria criar uma entidade CartItem separada
+  @Column({ name: 'client_profile_id' })
+  clientProfileId: number;
+
+  @OneToMany(() => CartItem, (cartItem) => cartItem.cart, {
+    eager: true,
+    cascade: true,
+  })
+  items: CartItem[];
 
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   totalValue: number;
