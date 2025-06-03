@@ -157,4 +157,19 @@ export class UserService {
   async assertThatCnhAlreadyExists(cnh: string) {
     // TODO: Implement this method
   }
+
+  async getClientProfile(userId: number): Promise<ClientProfile> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['clientProfile'],
+    });
+
+    if (!user || !user.clientProfile) {
+      throw new NotFoundException(
+        `Perfil de cliente não encontrado para o usuário ${userId}`,
+      );
+    }
+
+    return user.clientProfile;
+  }
 }
