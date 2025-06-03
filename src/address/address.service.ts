@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -11,7 +11,7 @@ export class AddressService {
   constructor(
     @InjectRepository(Address)
     private readonly addressRepository: Repository<Address>,
-    private readonly userService: UserService, // Assuming ClientService is defined and injected for client profile operations
+    private readonly userService: UserService,
   ) {}
 
   async create(
@@ -19,6 +19,8 @@ export class AddressService {
     userId: number,
   ): Promise<Address> {
     const clientProfile = await this.userService.getClientProfile(userId);
+
+    await this.assertThatAddressAlreadyExists(clientProfile.id);
 
     const createdAddress = this.addressRepository.create({
       ...createAddressDto,
@@ -41,5 +43,15 @@ export class AddressService {
 
   remove(id: number) {
     return `This action removes a #${id} address`;
+  }
+
+  private async assertThatAddressAlreadyExists(userId: number): Promise<void> {
+    const existingAddress = await this.addressRepository.findOne({
+      where: { clientProfileId: userId },
+    });
+
+    if (existingAddress) {
+      throw new ConflictException('Address already exists for this user');
+    }
   }
 }

@@ -17,7 +17,6 @@ import { RolesGuard } from '../auth/roles.guard';
 import { UserRole } from '../user/entities/enums/user-role';
 import { Roles } from 'src/auth/roles.decorator';
 import { GetUser } from '../auth/get-user.decoretor';
-import { use } from 'passport';
 
 @ApiTags('Address')
 @ApiBearerAuth()
@@ -28,7 +27,10 @@ export class AddressController {
   constructor(private readonly addressService: AddressService) {}
 
   @Post()
-  create(@Body() createAddressDto: CreateAddressDto, @GetUser('id') userId: string) {
+  create(
+    @Body() createAddressDto: CreateAddressDto,
+    @GetUser('id') userId: string,
+  ) {
     return this.addressService.create(createAddressDto, +userId);
   }
 
