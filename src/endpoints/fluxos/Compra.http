@@ -1,10 +1,26 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDg5NzM3NzgsImV4cCI6MTc0ODk3NzM3OH0.-DXAxBDvDXeJp3YXosJyaCRKWvgyNexF9bRwZ6OQnfQ
+@baseurl=http://localhost:3000
+
 ### Buscar produtos
-GET http://localhost:3000/products
+GET {{baseurl}}/products
 
 ### Detalhe do produto
-GET http://localhost:3000/products/1
+GET {{baseurl}}/products/1
 
 ### Adicionar ao carinho
+POST {{baseurl}}/cart/add
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 1,
+  "quantity": 1
+}
+
+### Ver o carrinho do cliente
+
+GET {{baseurl}}/cart
+Authorization: Bearer {{token}}
 
 ### Pagamento
 

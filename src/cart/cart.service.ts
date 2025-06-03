@@ -57,10 +57,7 @@ export class CartService {
     return cart;
   }
 
-  async addToCart(
-    userId: number,
-    addToCartDto: AddToCartDto,
-  ): Promise<Cart> {
+  async addToCart(userId: number, addToCartDto: AddToCartDto): Promise<Cart> {
     const { productId, quantity } = addToCartDto;
 
     const product = await this.productRepository.findOne({
@@ -136,8 +133,37 @@ export class CartService {
   async clearCart(userId: number): Promise<Cart> {
     const cart = await this.getOrCreateCart(userId);
 
-    await this.cartItemRepository.delete({ cartId: cart.id });
+    if (cart.items && cart.items.length > 0) {
+      // Remover todos os itens com uma abordagem mais robusta
+      const itemIds = cart.items.map((item) => item.id);
 
+      // Primeiro remove os itens
+      if (itemIds.length > 0) {
+        await this.cartItemRepository
+          .createQueryBuilder()
+          .delete()
+          .from(CartItem)
+          .where('id IN (:...ids)', { ids: itemIds })
+          .execute();
+      }
+
+      // Recarrega o carrinho para garantir que está atualizado
+      const updatedCart = await this.cartRepository.findOne({
+        where: { id: cart.id },
+        relations: ['items', 'items.product'],
+      });
+
+      if (updatedCart) {
+        // Atualiza os totais
+        updatedCart.totalValue = 0;
+        updatedCart.subtotal = 0;
+        updatedCart.deliveryFee = 0;
+
+        return this.cartRepository.save(updatedCart);
+      }
+    }
+
+    // Se o carrinho não tinha itens ou não foi encontrado após recarregar
     cart.totalValue = 0;
     cart.subtotal = 0;
     cart.deliveryFee = 0;
