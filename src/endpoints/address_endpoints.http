@@ -1,0 +1,17 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDg5NzM3NzgsImV4cCI6MTc0ODk3NzM3OH0.-DXAxBDvDXeJp3YXosJyaCRKWvgyNexF9bRwZ6OQnfQ
+@baseurl=http://localhost:3000
+
+### Criar um novo endereço para o cliente
+
+POST {{baseurl}}/address
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "street": "Rua das Flores",
+  "number": "123",
+  "complement": "Apto 101",
+  "city": "São Paulo",
+  "state": "SP",
+  "postalCode": "01234-567"
+}
