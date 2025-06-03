@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Cart } from './entities/cart.entity';
 import { Product } from '../products/entities/product.entity';
 import { CartItem } from './entities/cart-item.entity';
-import { addToCartDto } from './dto/add-to-cart.dto';
+import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item-dto';
 
 @Injectable()
@@ -40,7 +40,7 @@ export class CartService {
 
   async addToCart(
     clientProfileId: number,
-    addToCartDto: addToCartDto,
+    addToCartDto: AddToCartDto,
   ): Promise<Cart> {
     const { productId, quantity } = addToCartDto;
 

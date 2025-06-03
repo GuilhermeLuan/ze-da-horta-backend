@@ -2,7 +2,7 @@
 import { IsNotEmpty, IsNumber, IsPositive, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class addToCartDto {
+export class AddToCartDto {
   @ApiProperty({
     description: 'ID do produto a ser adicionado ao carrinho',
     example: 1,
