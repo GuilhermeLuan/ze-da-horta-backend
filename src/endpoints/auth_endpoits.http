@@ -10,6 +10,15 @@ Content-Type: application/json
   "cpf": "123456678177"
 }
 
+### Realizar login - Cliente
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "email": "guilhermeluan@pm.me",
+  "password": "teste123456"
+}
+
 ### Realizar cadastro do tipo Produtor
 POST http://localhost:3000/auth/register
 Content-Type: application/json
@@ -48,7 +57,7 @@ Content-Type: application/json
   "cnh": "123456678171127",
   "vehicleType": "MOTORCYCLE"
 }
-### Realizar login
+### Realizar login - Produtor
 POST http://localhost:3000/auth/login
 Content-Type: application/json
 

@@ -6,6 +6,7 @@ import { Product } from '../products/entities/product.entity';
 import { CartItem } from './entities/cart-item.entity';
 import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item-dto';
+import { ClientProfile } from '../user/entities/client-profile.entity';
 
 @Injectable()
 export class CartService {
@@ -16,11 +17,29 @@ export class CartService {
     private readonly productRepository: Repository<Product>,
     @InjectRepository(CartItem)
     private readonly cartItemRepository: Repository<CartItem>,
+    @InjectRepository(ClientProfile)
+    private readonly clientProfileRepository: Repository<ClientProfile>,
   ) {}
 
-  async getOrCreateCart(clientProfileId: number): Promise<Cart> {
+  private async getClientProfileId(userId: number): Promise<number> {
+    const clientProfile = await this.clientProfileRepository.findOne({
+      where: { user: { id: userId } },
+    });
+
+    if (!clientProfile) {
+      throw new NotFoundException(
+        `Perfil de cliente não encontrado para o usuário ${userId}`,
+      );
+    }
+
+    return clientProfile.id;
+  }
+
+  async getOrCreateCart(userId: number): Promise<Cart> {
+    const clientProfileId = await this.getClientProfileId(userId);
+
     const cart = await this.cartRepository.findOne({
-      where: { clientProfile: { id: clientProfileId } },
+      where: { clientProfileId },
       relations: ['items', 'items.product'],
     });
 
@@ -39,7 +58,7 @@ export class CartService {
   }
 
   async addToCart(
-    clientProfileId: number,
+    userId: number,
     addToCartDto: AddToCartDto,
   ): Promise<Cart> {
     const { productId, quantity } = addToCartDto;
@@ -52,7 +71,7 @@ export class CartService {
       throw new NotFoundException(`Product with id ${productId} not found`);
     }
 
-    const cart = await this.getOrCreateCart(clientProfileId);
+    const cart = await this.getOrCreateCart(userId);
 
     const existingItem = cart.items.find(
       (item) => item.productId === productId,
@@ -77,13 +96,13 @@ export class CartService {
   }
 
   async updateCartItem(
-    clientProfileId: number,
+    userId: number,
     itemId: number,
     updateCartItemDto: UpdateCartItemDto,
   ): Promise<Cart> {
     const { quantity } = updateCartItemDto;
 
-    const cart = await this.getOrCreateCart(clientProfileId);
+    const cart = await this.getOrCreateCart(userId);
     const cartItem = await this.cartItemRepository.findOne({
       where: { id: itemId, cartId: cart.id },
       relations: ['product'],
@@ -100,8 +119,8 @@ export class CartService {
     return this.calculateTotals(cart.id);
   }
 
-  async removeFromCart(clientId: number, itemId: number): Promise<Cart> {
-    const cart = await this.getOrCreateCart(clientId);
+  async removeFromCart(userId: number, itemId: number): Promise<Cart> {
+    const cart = await this.getOrCreateCart(userId);
     const cartItem = await this.cartItemRepository.findOne({
       where: { id: itemId, cartId: cart.id },
     });
@@ -114,8 +133,8 @@ export class CartService {
     return this.calculateTotals(cart.id);
   }
 
-  async clearCart(clientProfileId: number): Promise<Cart> {
-    const cart = await this.getOrCreateCart(clientProfileId);
+  async clearCart(userId: number): Promise<Cart> {
+    const cart = await this.getOrCreateCart(userId);
 
     await this.cartItemRepository.delete({ cartId: cart.id });
 
@@ -126,8 +145,8 @@ export class CartService {
     return this.cartRepository.save(cart);
   }
 
-  async getCart(clientProfileId: number): Promise<Cart> {
-    return await this.getOrCreateCart(clientProfileId);
+  async getCart(userId: number): Promise<Cart> {
+    return await this.getOrCreateCart(userId);
   }
 
   private async calculateTotals(cartId: number): Promise<Cart> {
