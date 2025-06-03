@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Patch,
   Post,
   UseGuards,
@@ -34,23 +33,26 @@ export class AddressController {
     return this.addressService.create(createAddressDto, +userId);
   }
 
+  // @Get()
+  // findAll() {
+  //   return this.addressService.findAll();
+  // }
+
   @Get()
-  findAll() {
-    return this.addressService.findAll();
+  findOne(@GetUser('id') userId: string) {
+    return this.addressService.findOne(+userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.addressService.findOne(+id);
+  @Patch()
+  update(
+    @GetUser('id') userId: string,
+    @Body() updateAddressDto: UpdateAddressDto,
+  ) {
+    return this.addressService.update(updateAddressDto, +userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAddressDto: UpdateAddressDto) {
-    return this.addressService.update(+id, updateAddressDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.addressService.remove(+id);
+  @Delete()
+  remove(@GetUser('id') userId: string) {
+    return this.addressService.remove(+userId);
   }
 }

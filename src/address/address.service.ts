@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateAddressDto } from './dto/create-address.dto';
 import { UpdateAddressDto } from './dto/update-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -20,7 +24,7 @@ export class AddressService {
   ): Promise<Address> {
     const clientProfile = await this.userService.getClientProfile(userId);
 
-    await this.assertThatAddressAlreadyExists(clientProfile.id);
+    await this.assertClientHasNoAddress(clientProfile.id);
 
     const createdAddress = this.addressRepository.create({
       ...createAddressDto,
@@ -33,19 +37,39 @@ export class AddressService {
     return `This action returns all address`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} address`;
+  async findOne(userId: number): Promise<Address> {
+    // Primeiro, encontrar o perfil de cliente associado ao userId
+    const clientProfile = await this.userService.getClientProfile(userId);
+
+    // Agora usar o clientProfileId para buscar o endereço
+    const address = await this.addressRepository.findOne({
+      where: { clientProfile: { id: clientProfile.id } },
+      relations: ['clientProfile'],
+    });
+
+    if (!address) {
+      throw new NotFoundException('Address not found for this user');
+    }
+
+    return address;
   }
 
-  update(id: number, updateAddressDto: UpdateAddressDto) {
-    return `This action updates a #${id} address`;
+  async update(updateAddressDto: UpdateAddressDto, userId: number) {
+    const addressToUpdate = await this.findOne(userId);
+    Object.assign(addressToUpdate, updateAddressDto);
+
+    return this.addressRepository.save(addressToUpdate);
   }
 
   remove(id: number) {
     return `This action removes a #${id} address`;
   }
 
-  private async assertThatAddressAlreadyExists(userId: number): Promise<void> {
+  private async assertThatAddressExists(userId: number): Promise<void> {
+    await this.findOne(userId);
+  }
+
+  private async assertClientHasNoAddress(userId: number): Promise<void> {
     const existingAddress = await this.addressRepository.findOne({
       where: { clientProfileId: userId },
     });
