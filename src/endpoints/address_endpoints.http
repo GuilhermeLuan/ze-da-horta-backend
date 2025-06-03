@@ -1,8 +1,7 @@
 @token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDg5NzM3NzgsImV4cCI6MTc0ODk3NzM3OH0.-DXAxBDvDXeJp3YXosJyaCRKWvgyNexF9bRwZ6OQnfQ
 @baseurl=http://localhost:3000
 
-### Criar um novo endereço para o cliente
-
+### 1. Criar um endereço para o cliente logado
 POST {{baseurl}}/address
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -16,3 +15,25 @@ Authorization: Bearer {{token}}
   "postalCode": "01234-567"
 }
 
+### 2. Buscar o endereço do cliente logado
+GET {{baseurl}}/address
+Authorization: Bearer {{token}}
+
+### 4. Atualizar endereço usando o ID passado na URL
+# Nota: Este endpoint usa o ID do usuário logado, não o ID da URL
+PATCH {{baseurl}}/address
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "street": "Avenida Paulista",
+  "number": "1500",
+  "complement": "Sala 203",
+  "city": "São Paulo",
+  "state": "SP",
+  "postalCode": "01310-200"
+}
+
+### 5. Remover um endereço por ID
+DELETE {{baseurl}}/address
+Authorization: Bearer {{token}}

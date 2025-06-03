@@ -33,11 +33,6 @@ export class AddressController {
     return this.addressService.create(createAddressDto, +userId);
   }
 
-  // @Get()
-  // findAll() {
-  //   return this.addressService.findAll();
-  // }
-
   @Get()
   findOne(@GetUser('id') userId: string) {
     return this.addressService.findOne(+userId);

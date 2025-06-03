@@ -33,15 +33,9 @@ export class AddressService {
     return await this.addressRepository.save(createdAddress);
   }
 
-  findAll() {
-    return `This action returns all address`;
-  }
-
   async findOne(userId: number): Promise<Address> {
-    // Primeiro, encontrar o perfil de cliente associado ao userId
     const clientProfile = await this.userService.getClientProfile(userId);
 
-    // Agora usar o clientProfileId para buscar o endereço
     const address = await this.addressRepository.findOne({
       where: { clientProfile: { id: clientProfile.id } },
       relations: ['clientProfile'],
@@ -61,8 +55,9 @@ export class AddressService {
     return this.addressRepository.save(addressToUpdate);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} address`;
+  async remove(userId: number): Promise<void> {
+    const addressToRemove = await this.findOne(userId);
+    await this.addressRepository.remove(addressToRemove);
   }
 
   private async assertThatAddressExists(userId: number): Promise<void> {
