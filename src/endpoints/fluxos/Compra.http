@@ -26,6 +26,19 @@ Authorization: Bearer {{token}}
 
 ### Endereço
 
+POST {{baseurl}}/address
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "street": "Rua das Flores",
+  "number": "123",
+  "complement": "Apto 101",
+  "city": "São Paulo",
+  "state": "SP",
+  "postalCode": "01234-567"
+}
+
 ### Status
 
 ### Avaliar comprar

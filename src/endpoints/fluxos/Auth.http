@@ -1,9 +1,11 @@
+@baseurl=http://localhost:3000
+
 ### Fluxo de autenticação e cadastro
 
 ### Registro
 
 ### Cliente
-POST http://localhost:3000/auth/register
+POST {{baseurl}}/auth/register
 Content-Type: application/json
 
 {
@@ -15,7 +17,7 @@ Content-Type: application/json
 }
 
 ### Produtor
-POST http://localhost:3000/auth/register
+POST {{baseurl}}/auth/register
 Content-Type: application/json
 
 {
@@ -27,7 +29,7 @@ Content-Type: application/json
 }
 
 ### Entregador
-POST http://localhost:3000/auth/register
+POST {{baseurl}}/auth/register
 Content-Type: application/json
 
 {
@@ -41,12 +43,10 @@ Content-Type: application/json
 
 ### Login
 
-POST http://localhost:3000/auth/login
+POST {{baseurl}}/auth/login
 Content-Type: application/json
 
 {
   "email": "guilhermeluanprodutor11@pm.me",
   "password": "teste123456"
 }
-
-### Logout - implementação não está disponível
