@@ -1,18 +1,32 @@
-import { ClientProfile } from "src/user/entities/client-profile.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { ClientProfile } from 'src/user/entities/client-profile.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class Cart {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @OneToOne(() => ClientProfile, (clientProfile) => clientProfile.cart, { onDelete: 'CASCADE' })
-    @JoinColumn()
-    clientProfile: ClientProfile;
+  @OneToOne(() => ClientProfile, (clientProfile) => clientProfile.cart, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn()
+  clientProfile: ClientProfile;
 
-    @Column('json', { nullable: true }) // ou 'text' se preferir JSON string
-    items: any[]; // Melhor seria criar uma entidade CartItem separada
+  @Column('json', { nullable: true }) // ou 'text' se preferir JSON string
+  items: any[]; // Melhor seria criar uma entidade CartItem separada
 
-    @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
-    totalValue: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  totalValue: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  deliveryFee: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
+  subtotal: number;
 }
