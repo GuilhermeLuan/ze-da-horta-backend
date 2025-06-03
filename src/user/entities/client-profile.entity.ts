@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Cart } from 'src/cart/entities/cart.entity';
 
 @Entity()
 export class ClientProfile {
@@ -18,4 +19,7 @@ export class ClientProfile {
   @OneToOne(() => User, (user) => user.clientProfile, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
+
+  @OneToOne(() => Cart, (cart) => cart.clientProfile)
+  cart: Cart;
 }
