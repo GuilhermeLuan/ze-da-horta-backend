@@ -9,5 +9,6 @@ import { ClientProfile } from './entities/client-profile.entity';
   imports: [TypeOrmModule.forFeature([User, ClientProfile])],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService], // Exportando o UserService para ser usado em outros módulos
 })
 export class UserModule {}

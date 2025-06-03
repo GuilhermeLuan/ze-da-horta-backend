@@ -2,7 +2,6 @@
 
 ### Criar um novo produto
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0ODg2MzE3OCwiZXhwIjoxNzQ4ODY2Nzc4fQ.vsoLIsegjZ6JyXEdDkeDPpNP36cpRsJ40qkZ7Fs9NlA
 
 POST http://localhost:3000/products
 Content-Type: application/json
