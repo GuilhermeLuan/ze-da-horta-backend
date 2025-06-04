@@ -237,12 +237,6 @@ export class OrdersService {
   ): Promise<Order> {
     const order = await this.findOne(id, userId, UserRole.CLIENT);
 
-    if (updateOrderDto.deliveryAddressId) {
-      await this.addressService.findOne(userId);
-
-      order.deliveryAddressId = updateOrderDto.deliveryAddressId;
-    }
-
     return this.orderRepository.save(order);
   }
 
