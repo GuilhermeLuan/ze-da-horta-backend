@@ -41,4 +41,4 @@ export class OrderItem {
 
   @Column({ name: 'product_description', nullable: true })
   productDescription: string;
-}
+} 

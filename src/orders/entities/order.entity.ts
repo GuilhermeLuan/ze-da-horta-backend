@@ -11,8 +11,8 @@ import {
 import { ClientProfile } from '../../user/entities/client-profile.entity';
 import { Store } from '../../store/entities/store.entity';
 import { Address } from '../../address/entities/address.entity';
-import { OrderItem } from './order-item.entitiy';
 import { OrderStatus } from './order-status.enum';
+import { OrderItem } from './order-item.entity';
 
 @Entity()
 export class Order {
