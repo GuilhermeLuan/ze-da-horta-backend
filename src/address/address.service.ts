@@ -55,11 +55,6 @@ export class AddressService {
     return this.addressRepository.save(addressToUpdate);
   }
 
-  async remove(userId: number): Promise<void> {
-    const addressToRemove = await this.findOne(userId);
-    await this.addressRepository.remove(addressToRemove);
-  }
-
   private async assertThatAddressExists(userId: number): Promise<void> {
     await this.findOne(userId);
   }
