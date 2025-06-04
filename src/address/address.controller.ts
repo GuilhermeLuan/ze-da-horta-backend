@@ -176,29 +176,4 @@ export class AddressController {
   ) {
     return this.addressService.update(updateAddressDto, +userId);
   }
-
-  @Delete()
-  @ApiOperation({
-    summary: 'Remover endereço',
-    description: 'Remove o endereço do cliente autenticado',
-  })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Endereço removido com sucesso',
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Usuário não autenticado',
-  })
-  @ApiResponse({
-    status: HttpStatus.FORBIDDEN,
-    description: 'Usuário não tem permissão para remover endereços',
-  })
-  @ApiResponse({
-    status: HttpStatus.NOT_FOUND,
-    description: 'Endereço não encontrado',
-  })
-  remove(@GetUser('id') userId: string) {
-    return this.addressService.remove(+userId);
-  }
 }
