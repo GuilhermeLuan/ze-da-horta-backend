@@ -237,17 +237,9 @@ export class OrdersService {
   ): Promise<Order> {
     const order = await this.findOne(id, userId, UserRole.CLIENT);
 
-    // Apenas alguns campos podem ser atualizados
     if (updateOrderDto.deliveryAddressId) {
-      const deliveryAddress = await this.addressRepository.findOne({
-        where: {
-          id: updateOrderDto.deliveryAddressId,
-          clientProfile: { id: order.clientProfileId },
-        },
-      });
-      if (!deliveryAddress) {
-        throw new NotFoundException('Endereço de entrega não encontrado');
-      }
+      await this.addressService.findOne(userId);
+
       order.deliveryAddressId = updateOrderDto.deliveryAddressId;
     }
 
