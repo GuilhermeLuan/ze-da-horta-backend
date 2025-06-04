@@ -5,7 +5,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Store } from './entities/store.entity';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
-import { StockService } from '../stock/stock.service';
 import { Stock } from '../stock/entities/stock.entity';
 
 @Injectable()
@@ -17,7 +16,6 @@ export class StoreService {
     private readonly userRepository: Repository<User>,
     @InjectRepository(Stock)
     private readonly stockRepository: Repository<Stock>,
-    private readonly stockService: StockService,
   ) {}
 
   async create(createStoreDto: CreateStoreDto): Promise<Store> {

@@ -62,7 +62,7 @@ Authorization: Bearer {{token}}
   "imageUrl": "https://example.com/images/maca_gala.jpg",
   "rating": 4.5,
   "category": "Fruta",
-  "storeId": 1
+  "storeId": 2
 }
 
 ### Buscar produtos com filtros (name)

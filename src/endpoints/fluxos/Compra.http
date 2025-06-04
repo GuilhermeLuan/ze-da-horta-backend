@@ -34,7 +34,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "productId": 1,
+  "productId": 2,
   "quantity": 1
 }
 

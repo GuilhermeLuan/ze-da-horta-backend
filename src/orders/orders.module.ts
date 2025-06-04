@@ -11,6 +11,10 @@ import { Cart } from '../cart/entities/cart.entity';
 import { CartItem } from '../cart/entities/cart-item.entity';
 import { OrderItem } from './entities/order-item.entity';
 import { CartService } from '../cart/cart.service';
+import { UserModule } from '../user/user.module';
+import { StoreModule } from '../store/store.module';
+import { StockModule } from '../stock/stock.module';
+import { AddressModule } from '../address/address.module';
 
 @Module({
   imports: [
@@ -24,6 +28,10 @@ import { CartService } from '../cart/cart.service';
       Cart,
       CartItem,
     ]),
+    UserModule,
+    StoreModule,
+    StockModule,
+    AddressModule,
   ],
   controllers: [OrdersController],
   providers: [OrdersService, CartService],

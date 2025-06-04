@@ -12,14 +12,17 @@ import { InventoryItemsService } from '../inventory-items/inventory-items.servic
 import { InventoryItem } from '../inventory-items/entities/inventory-item.entity';
 import { Product } from '../products/entities/product.entity';
 import { Stock } from '../stock/entities/stock.entity';
+import { AddressModule } from '../address/address.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Store, InventoryItem, Product, Stock]),
     ProductsModule,
     StockModule,
+    AddressModule,
   ],
   controllers: [StoreController, InventoryItemsController],
   providers: [StoreService, ProductsService, InventoryItemsService],
+  exports: [StoreService],
 })
 export class StoreModule {}

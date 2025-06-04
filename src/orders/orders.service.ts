@@ -1,6 +1,5 @@
 import {
   BadRequestException,
-  ForbiddenException,
   Injectable,
   Logger,
   NotFoundException,
@@ -10,17 +9,17 @@ import { Repository } from 'typeorm';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
 import { Order } from './entities/order.entity';
-import { Product } from '../products/entities/product.entity';
 import { Store } from '../store/entities/store.entity';
 import { Address } from '../address/entities/address.entity';
 import { ClientProfile } from '../user/entities/client-profile.entity';
 import { OrderStatus } from './entities/order-status.enum';
 import { Cart } from '../cart/entities/cart.entity';
-import { CartItem } from '../cart/entities/cart-item.entity';
 import { UserRole } from '../user/entities/enums/user-role';
 import { OrderItem } from './entities/order-item.entity';
 import { CartService } from '../cart/cart.service';
 import { UserService } from '../user/user.service';
+import { StoreService } from '../store/store.service';
+import { AddressService } from '../address/address.service';
 
 @Injectable()
 export class OrdersService {
@@ -31,8 +30,6 @@ export class OrdersService {
     private readonly orderRepository: Repository<Order>,
     @InjectRepository(OrderItem)
     private readonly orderItemRepository: Repository<OrderItem>,
-    @InjectRepository(Product)
-    private readonly productRepository: Repository<Product>,
     @InjectRepository(Store)
     private readonly storeRepository: Repository<Store>,
     @InjectRepository(Address)
@@ -41,10 +38,10 @@ export class OrdersService {
     private readonly clientProfileRepository: Repository<ClientProfile>,
     @InjectRepository(Cart)
     private readonly cartRepository: Repository<Cart>,
-    @InjectRepository(CartItem)
-    private readonly cartItemRepository: Repository<CartItem>,
     private readonly CartService: CartService,
     private readonly userService: UserService,
+    private readonly storeService: StoreService,
+    private readonly addressService: AddressService,
   ) {}
 
   async create(createOrderDto: CreateOrderDto, userId: number): Promise<Order> {
@@ -66,7 +63,20 @@ export class OrdersService {
       throw new BadRequestException('O carrinho está vazio');
     }
 
+    // Verificações de segurança para evitar acesso a propriedades de null/undefined
+    if (!cart.items[0] || !cart.items[0].product) {
+      throw new BadRequestException('Item do carrinho inválido');
+    }
+
+    if (!cart.items[0].product.store) {
+      throw new NotFoundException('Loja do produto não encontrada');
+    }
+
     const storeId = cart.items[0].product.store.id;
+    if (storeId == null) {
+      throw new NotFoundException('ID da loja não encontrado');
+    }
+
     const allSameStore = cart.items.every(
       (item) => item.product.store.id === storeId,
     );
@@ -76,23 +86,7 @@ export class OrdersService {
       );
     }
 
-    const store = await this.storeRepository.findOne({
-      where: { id: storeId },
-    });
-    if (!store) {
-      throw new NotFoundException('Loja não encontrada');
-    }
-
-    const deliveryAddress = await this.addressRepository.findOne({
-      where: {
-        clientProfile: { id: clientProfile.id },
-      },
-    });
-    if (!deliveryAddress) {
-      throw new NotFoundException(
-        'Endereço de entrega não encontrado ou não pertence ao cliente',
-      );
-    }
+    const deliveryAddress = await this.addressService.findOne(userId);
 
     // Criar o pedido
     const order = this.orderRepository.create({
@@ -180,37 +174,11 @@ export class OrdersService {
       throw new NotFoundException(`Pedido com ID ${id} não encontrado`);
     }
 
-    // Verificar permissão
-    if (userRole === UserRole.CLIENT) {
-      const clientProfile = await this.clientProfileRepository.findOne({
-        where: { user: { id: userId } },
-      });
-      if (!clientProfile || order.clientProfileId !== clientProfile.id) {
-        throw new ForbiddenException(
-          'Você não tem permissão para acessar este pedido',
-        );
-      }
-    } else if (userRole === UserRole.PRODUCER) {
-      const store = await this.storeRepository.findOne({
-        where: { producerProfile: { user: { id: userId } } },
-      });
-      if (!store || order.storeId !== store.id) {
-        throw new ForbiddenException(
-          'Você não tem permissão para acessar este pedido',
-        );
-      }
-    }
-
     return order;
   }
 
   async findByClient(userId: number): Promise<Order[]> {
-    const clientProfile = await this.clientProfileRepository.findOne({
-      where: { user: { id: userId } },
-    });
-    if (!clientProfile) {
-      throw new NotFoundException('Perfil do cliente não encontrado');
-    }
+    const clientProfile = await this.userService.getClientProfile(userId);
 
     return this.orderRepository.find({
       where: { clientProfileId: clientProfile.id },
