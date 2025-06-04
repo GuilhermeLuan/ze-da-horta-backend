@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDkwNTY0NjMsImV4cCI6MTc0OTA2MDA2M30.oGtZ3PDapJfrGgb_ORPX1ZVN4KsaPvn6-Dc0OcSQIN4
+@token_client=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDkwNzE4OTAsImV4cCI6MTc0OTA3NTQ5MH0.izaTFK7c5aPZ_jbJ3-FX6qr1hJNfQHSR4uA0OnGf0O8
 @baseurl=http://localhost:3000
 
 ### Registro de cliente
@@ -31,22 +31,22 @@ GET {{baseurl}}/products/1
 ### Adicionar ao carinho
 POST {{baseurl}}/cart/add
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{token_client}}
 
 {
-  "productId": 2,
+  "productId": 1,
   "quantity": 1
 }
 
 ### Ver o carrinho do cliente
 
 GET {{baseurl}}/cart
-Authorization: Bearer {{token}}
+Authorization: Bearer {{token_client}}
 
 ### Adicionar endereço de entrega para o client logado
 POST {{baseurl}}/address
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{token_client}}
 
 {
   "street": "Rua das Flores",
@@ -61,7 +61,7 @@ Authorization: Bearer {{token}}
 
 POST {{baseurl}}/orders
 Content-Type: application/json
-Authorization: Bearer {{token}}
+Authorization: Bearer {{token_client}}
 
 {
   "paymentMethod": "CREDIT_CARD"
@@ -69,6 +69,6 @@ Authorization: Bearer {{token}}
 
 ### Status
 GET {{baseurl}}/orders
-Authorization: Bearer {{token}}
+Authorization: Bearer {{token_client}}
 
 ### Avaliar comprar
