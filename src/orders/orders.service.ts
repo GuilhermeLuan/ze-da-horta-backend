@@ -20,6 +20,7 @@ import { CartItem } from '../cart/entities/cart-item.entity';
 import { UserRole } from '../user/entities/enums/user-role';
 import { OrderItem } from './entities/order-item.entity';
 import { CartService } from '../cart/cart.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class OrdersService {
@@ -43,17 +44,13 @@ export class OrdersService {
     @InjectRepository(CartItem)
     private readonly cartItemRepository: Repository<CartItem>,
     private readonly CartService: CartService,
+    private readonly userService: UserService,
   ) {}
 
   async create(createOrderDto: CreateOrderDto, userId: number): Promise<Order> {
     this.logger.log(`Criando novo pedido para usuário ${userId}`);
 
-    const clientProfile = await this.clientProfileRepository.findOne({
-      where: { user: { id: userId } },
-    });
-    if (!clientProfile) {
-      throw new NotFoundException('Perfil do cliente não encontrado');
-    }
+    const clientProfile = await this.userService.getClientProfile(userId);
 
     const cart = await this.cartRepository.findOne({
       where: {
@@ -261,8 +258,6 @@ export class OrdersService {
 
     const updatedOrder = await this.orderRepository.save(order);
     this.logger.log(`Status do pedido ${id} alterado para ${status}`);
-
-    // TODO: Enviar notificação para o cliente sobre mudança de status
 
     return updatedOrder;
   }
