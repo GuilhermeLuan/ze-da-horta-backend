@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXIiOiJwcm9kdXRvckBnbWFpbC5jb20iLCJyb2xlIjoicHJvZHV0b3IiLCJpYXQiOjE3NDg5MDIzNTIsImV4cCI6MTc0ODkwNTk1Mn0.BTYzINUUzojmNSEyY2H7rZTJFsygavgm11d_2AQske0
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXIiOiJwcm9kdXRvckBnbWFpbC5jb20iLCJyb2xlIjoicHJvZHV0b3IiLCJpYXQiOjE3NDkwNTYyODYsImV4cCI6MTc0OTA1OTg4Nn0.JGLcGODGaLE-EWXWjbQWAg8u6IGHVs3xkvW9KKh9BT4
 @baseurl=localhost:3000
 
 ### Realizar cadastro do tipo Produtor
@@ -33,7 +33,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Loja do Zé",
+  "name": "Zé",
   "description": "Frutas e verduras frescas direto da horta.",
   "producerProfileId": 1
 }
@@ -62,7 +62,7 @@ Authorization: Bearer {{token}}
   "imageUrl": "https://example.com/images/maca_gala.jpg",
   "rating": 4.5,
   "category": "Fruta",
-  "storeId": 1
+  "storeId": 2
 }
 
 ### Buscar produtos com filtros (name)

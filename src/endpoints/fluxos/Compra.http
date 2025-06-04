@@ -1,5 +1,26 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDg5NzM3NzgsImV4cCI6MTc0ODk3NzM3OH0.-DXAxBDvDXeJp3YXosJyaCRKWvgyNexF9bRwZ6OQnfQ
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDkwNTY0NjMsImV4cCI6MTc0OTA2MDA2M30.oGtZ3PDapJfrGgb_ORPX1ZVN4KsaPvn6-Dc0OcSQIN4
 @baseurl=http://localhost:3000
+
+### Registro de cliente
+POST {{baseurl}}/auth/register
+Content-Type: application/json
+
+{
+  "name": "Guilherme Luan",
+  "email": "guilhermeluan@pm.me",
+  "password": "teste123456",
+  "role": "cliente",
+  "cpf": "123456678177"
+}
+
+### Login
+POST {{baseurl}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "guilhermeluan@pm.me",
+  "password": "teste123456"
+}
 
 ### Buscar produtos
 GET {{baseurl}}/products
@@ -13,7 +34,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "productId": 1,
+  "productId": 2,
   "quantity": 1
 }
 
@@ -22,10 +43,7 @@ Authorization: Bearer {{token}}
 GET {{baseurl}}/cart
 Authorization: Bearer {{token}}
 
-### Pagamento
-
-### Endereço
-
+### Adicionar endereço de entrega para o client logado
 POST {{baseurl}}/address
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -39,6 +57,18 @@ Authorization: Bearer {{token}}
   "postalCode": "01234-567"
 }
 
+### Pagamento
+
+POST {{baseurl}}/orders
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "paymentMethod": "CREDIT_CARD"
+}
+
 ### Status
+GET {{baseurl}}/orders
+Authorization: Bearer {{token}}
 
 ### Avaliar comprar

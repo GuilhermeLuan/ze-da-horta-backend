@@ -18,6 +18,17 @@ async function bootstrap() {
     .setTitle('Ze da Horta API')
     .setDescription('API documentation for the NestJS application')
     .setVersion('1.0')
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+        name: 'JWT',
+        description: 'Insira seu token JWT',
+        in: 'header',
+      },
+      'JWT-auth', // Este nome deve corresponder ao usado em @ApiBearerAuth() nos controladores
+    )
     .build();
 
   const documentFactory = () =>
