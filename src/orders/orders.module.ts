@@ -10,6 +10,7 @@ import { ClientProfile } from '../user/entities/client-profile.entity';
 import { Cart } from '../cart/entities/cart.entity';
 import { CartItem } from '../cart/entities/cart-item.entity';
 import { OrderItem } from './entities/order-item.entity';
+import { CartService } from '../cart/cart.service';
 
 @Module({
   imports: [
@@ -25,7 +26,7 @@ import { OrderItem } from './entities/order-item.entity';
     ]),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService],
+  providers: [OrdersService, CartService],
   exports: [OrdersService],
 })
 export class OrdersModule {}

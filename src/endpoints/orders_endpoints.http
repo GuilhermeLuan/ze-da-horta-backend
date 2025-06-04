@@ -8,8 +8,7 @@ Content-Type: application/json
 Authorization: Bearer {{token_client}}
 
 {
-  "paymentMethod": "CREDIT_CARD",
-  "notes": "Entregar após as 18h"
+  "paymentMethod": "CREDIT_CARD"
 }
 
 ### 2. Listar pedidos do cliente logado

@@ -19,13 +19,7 @@ import { Cart } from '../cart/entities/cart.entity';
 import { CartItem } from '../cart/entities/cart-item.entity';
 import { UserRole } from '../user/entities/enums/user-role';
 import { OrderItem } from './entities/order-item.entity';
-
-interface ValidatedOrderItem {
-  product: Product;
-  quantity: number;
-  unitPrice: number;
-  totalPrice: number;
-}
+import { CartService } from '../cart/cart.service';
 
 @Injectable()
 export class OrdersService {
@@ -48,6 +42,7 @@ export class OrdersService {
     private readonly cartRepository: Repository<Cart>,
     @InjectRepository(CartItem)
     private readonly cartItemRepository: Repository<CartItem>,
+    private readonly CartService: CartService,
   ) {}
 
   async create(createOrderDto: CreateOrderDto, userId: number): Promise<Order> {
@@ -132,12 +127,7 @@ export class OrdersService {
 
     await this.orderItemRepository.save(orderItems);
 
-    // Limpar o carrinho
-    await this.cartItemRepository.remove(cart.items);
-    cart.subtotal = 0;
-    cart.deliveryFee = 0;
-    cart.totalValue = 0;
-    await this.cartRepository.save(cart);
+    await this.CartService.clearCart(userId);
 
     // Buscar o pedido completo com todas as relações
     const completeOrder = await this.orderRepository.findOne({
@@ -156,10 +146,6 @@ export class OrdersService {
     }
 
     this.logger.log(`Pedido ${savedOrder.id} criado com sucesso`);
-
-    // TODO: Enviar email de confirmação
-    // TODO: Notificar a loja sobre o novo pedido
-    // TODO: Processar pagamento (se método de pagamento foi fornecido)
 
     return completeOrder;
   }
