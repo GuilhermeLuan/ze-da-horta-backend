@@ -88,6 +88,21 @@ export class UserService {
     return user;
   }
 
+  async findClientProfileByUserId(userId: number): Promise<ClientProfile> {
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['clientProfile'],
+    });
+
+    if (!user || !user.clientProfile) {
+      throw new NotFoundException(
+        `Client profile not found for user with id ${userId}`,
+      );
+    }
+
+    return user.clientProfile;
+  }
+
   async findOneByEmail(email: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { email },
