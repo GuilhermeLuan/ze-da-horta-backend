@@ -7,7 +7,6 @@ import {
   Patch,
   Post,
   UseGuards,
-  Request,
 } from '@nestjs/common';
 import { ReviewsService } from './reviews.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -29,18 +28,16 @@ export class ReviewsController {
   constructor(private readonly reviewsService: ReviewsService) {}
 
   @Post()
-  create(@Body() createReviewDto: CreateReviewDto, @GetUser('id') userId: string) {
+  create(
+    @Body() createReviewDto: CreateReviewDto,
+    @GetUser('id') userId: string,
+  ) {
     return this.reviewsService.create(createReviewDto, +userId);
   }
 
   @Get()
-  findAll() {
-    return this.reviewsService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.reviewsService.findOne(+id);
+  getUserReviews(@GetUser('id') id: string) {
+    return this.reviewsService.getUserReviews(+id);
   }
 
   @Patch(':id')

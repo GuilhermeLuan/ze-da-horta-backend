@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReviewDto } from './dto/create-review.dto';
 import { UpdateReviewDto } from './dto/update-review.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -35,12 +35,32 @@ export class ReviewsService {
     return this.reviewsRepository.save(review);
   }
 
-  findAll() {
-    return `This action returns all reviews`;
+  async getUserReviews(userId: number): Promise<Review[]> {
+    const clientProfile =
+      await this.userService.findClientProfileByUserId(userId);
+
+    const reviews = await this.reviewsRepository.findBy({
+      clientProfile: { id: clientProfile.id },
+    });
+
+    if (!reviews || reviews.length === 0) {
+      throw new NotFoundException(`No reviews found for user ID ${userId}`);
+    }
+
+    return reviews;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} review`;
+  async findOneOrThrowNotFoundException(id: number) {
+    const review = await this.reviewsRepository.findOne({
+      where: { id },
+      relations: ['clientProfile', 'order'],
+    });
+
+    if (!review) {
+      throw new NotFoundException(`Review with ID ${id} not found`);
+    }
+
+    return review;
   }
 
   update(id: number, updateReviewDto: UpdateReviewDto) {

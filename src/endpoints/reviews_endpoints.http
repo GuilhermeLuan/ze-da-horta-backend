@@ -10,4 +10,8 @@ Authorization: Bearer {{token}}
   "orderId": 1,
   "rating": 5,
   "comment": "Ótimo produto, chegou muito bem embalado!"
-} 
+}
+
+### Listar avaliações do usuário authenticado
+GET {{base_url}}/reviews
+Authorization: Bearer {{token}}
