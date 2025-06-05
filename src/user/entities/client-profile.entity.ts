@@ -2,12 +2,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Cart } from 'src/cart/entities/cart.entity';
 import { Address } from '../../address/entities/address.entity';
+import { Favorite } from '../../favorites/entities/favorite.entity';
 
 @Entity()
 export class ClientProfile {
@@ -28,4 +30,7 @@ export class ClientProfile {
     onDelete: 'CASCADE',
   })
   address: Address;
+
+  @OneToMany(() => Favorite, (favorite) => favorite.clientProfile)
+  favorites: Favorite[];
 }
