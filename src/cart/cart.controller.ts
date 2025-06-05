@@ -24,7 +24,7 @@ import { AddToCartDto } from './dto/add-to-cart.dto';
 import { UpdateCartItemDto } from './dto/update-cart-item-dto';
 
 @ApiTags('Cart')
-@ApiBearerAuth()
+@ApiBearerAuth('JWT-auth')
 @Controller('cart')
 @UseGuards(AuthGuard('jwt'), RolesGuard)
 @Roles(UserRole.CLIENT)

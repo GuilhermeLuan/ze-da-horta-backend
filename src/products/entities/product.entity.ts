@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { Store } from '../../store/entities/store.entity';
 import { InventoryItem } from '../../inventory-items/entities/inventory-item.entity';
+import { Favorite } from '../../favorites/entities/favorite.entity';
 
 @Entity()
 export class Product {
@@ -30,4 +31,7 @@ export class Product {
 
   @OneToMany(() => InventoryItem, (inventoryItem) => inventoryItem.product)
   inventoryItems: InventoryItem[];
+
+  @OneToMany(() => Favorite, (favorite) => favorite.product)
+  favorites: Favorite[];
 }
