@@ -139,7 +139,7 @@ export class ProductsController {
     description: 'Produto não encontrado',
   })
   findOne(@Param('id') id: string) {
-    return this.productsService.findOne(+id);
+    return this.productsService.findOneOrThrowNotFoundException(+id);
   }
 
   @Patch(':id')

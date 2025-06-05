@@ -38,7 +38,7 @@ export class ProductsService {
     return this.productRepository.find();
   }
 
-  async findOne(id: number): Promise<Product> {
+  async findOneOrThrowNotFoundException(id: number): Promise<Product> {
     const product = await this.productRepository.findOne({
       where: { id },
       relations: ['store'],
@@ -52,7 +52,7 @@ export class ProductsService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto) {
-    const productToUpdate = await this.findOne(id);
+    const productToUpdate = await this.findOneOrThrowNotFoundException(id);
     Object.assign(productToUpdate, updateProductDto);
 
     return this.productRepository.save(productToUpdate);
@@ -64,7 +64,7 @@ export class ProductsService {
   }
 
   async assertThatProductExists(id: number): Promise<void> {
-    await this.findOne(id);
+    await this.findOneOrThrowNotFoundException(id);
   }
 
   async findProductsByStoreId(id: number): Promise<Product[]> {

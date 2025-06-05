@@ -17,7 +17,7 @@ export class FavoritesService {
   ) {}
 
   async addFavorite(createFavoriteDto: CreateFavoriteDto, userId: number) {
-    await this.productService.findOne(createFavoriteDto.productId);
+    await this.productService.findOneOrThrowNotFoundException(createFavoriteDto.productId);
 
     const clientProfileId =
       await this.userService.findClientProfileByUserId(userId);
