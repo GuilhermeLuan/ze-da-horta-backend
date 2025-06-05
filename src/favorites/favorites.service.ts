@@ -1,11 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Favorite } from './entities/favorite.entity';
+import { Repository } from 'typeorm';
+import { ProductsService } from '../products/products.service';
 
 @Injectable()
 export class FavoritesService {
-  create(createFavoriteDto: CreateFavoriteDto) {
-    return 'This action adds a new favorite';
+  constructor(
+    @InjectRepository(Favorite)
+    private readonly favoriteRepository: Repository<Favorite>,
+    private readonly productService: ProductsService,
+  ) {}
+
+  async addFavorite(createFavoriteDto: CreateFavoriteDto, userId: number) {
+    await this.productService.findOne(createFavoriteDto.productId);
+
+    const newFavorite = this.favoriteRepository.create({
+      ...createFavoriteDto,
+      clientProfileId: userId,
+    });
+
+    return this.favoriteRepository.save(newFavorite);
   }
 
   findAll() {

@@ -1,0 +1,11 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFuMUBwbS5tZSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MTM4MTExLCJleHAiOjE3NDkxNDE3MTF9.KYiYAOeUeeuvr8LKJiN26EVuw9Kypt-6HBUyn1c-We4
+@base_url=http://localhost:3000
+
+### Adicionar aos favoritos
+POST {{base_url}}/favorites
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "productId": 1
+}
