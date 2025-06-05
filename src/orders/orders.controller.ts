@@ -158,7 +158,7 @@ export class OrdersController {
     @GetUser('id') userId: string,
     @GetUser('role') userRole: UserRole,
   ) {
-    return this.ordersService.findOne(id, +userId, userRole);
+    return this.ordersService.findOneOrThrownNotFoundException(id);
   }
 
   @Patch(':id')

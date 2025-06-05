@@ -13,6 +13,7 @@ import { Store } from '../../store/entities/store.entity';
 import { Address } from '../../address/entities/address.entity';
 import { OrderStatus } from './order-status.enum';
 import { OrderItem } from './order-item.entity';
+import { Review } from '../../reviews/entities/review.entity';
 
 @Entity()
 export class Order {
@@ -71,7 +72,6 @@ export class Order {
   @Column({ name: 'delivery_date_time', nullable: true })
   deliveryDateTime: Date;
 
-  // Campos para informações de pagamento (simplificado para MVP)
   @Column({ name: 'payment_method', nullable: true })
   paymentMethod: string;
 
@@ -80,4 +80,7 @@ export class Order {
 
   @Column({ name: 'payment_date', nullable: true })
   paymentDate: Date;
+
+  @OneToMany(() => Review, (review) => review.order)
+  reviews: Review[];
 }

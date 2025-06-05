@@ -14,7 +14,6 @@ import { Address } from '../address/entities/address.entity';
 import { ClientProfile } from '../user/entities/client-profile.entity';
 import { OrderStatus } from './entities/order-status.enum';
 import { Cart } from '../cart/entities/cart.entity';
-import { UserRole } from '../user/entities/enums/user-role';
 import { OrderItem } from './entities/order-item.entity';
 import { CartService } from '../cart/cart.service';
 import { UserService } from '../user/user.service';
@@ -154,11 +153,7 @@ export class OrdersService {
     });
   }
 
-  async findOne(
-    id: number,
-    userId: number,
-    userRole: UserRole,
-  ): Promise<Order> {
+  async findOneOrThrownNotFoundException(id: number): Promise<Order> {
     const order = await this.orderRepository.findOne({
       where: { id },
       relations: [
@@ -207,7 +202,7 @@ export class OrdersService {
     status: OrderStatus,
     userId: number,
   ): Promise<Order> {
-    const order = await this.findOne(id, userId, UserRole.PRODUCER);
+    const order = await this.findOneOrThrownNotFoundException(id);
 
     // Validar transições de status
     const validTransitions = this.getValidStatusTransitions(order.status);
@@ -235,13 +230,13 @@ export class OrdersService {
     updateOrderDto: UpdateOrderDto,
     userId: number,
   ): Promise<Order> {
-    const order = await this.findOne(id, userId, UserRole.CLIENT);
+    const order = await this.findOneOrThrownNotFoundException(id);
 
     return this.orderRepository.save(order);
   }
 
   async remove(id: number, userId: number): Promise<void> {
-    const order = await this.findOne(id, userId, UserRole.CLIENT);
+    const order = await this.findOneOrThrownNotFoundException(id);
 
     // Apenas pedidos pendentes podem ser cancelados/removidos
     if (order.status !== OrderStatus.PENDING) {
@@ -255,7 +250,7 @@ export class OrdersService {
   }
 
   async cancelOrder(id: number, userId: number): Promise<Order> {
-    const order = await this.findOne(id, userId, UserRole.CLIENT);
+    const order = await this.findOneOrThrownNotFoundException(id);
 
     // Verificar se o pedido pode ser cancelado
     if ([OrderStatus.DELIVERED, OrderStatus.CANCELED].includes(order.status)) {
