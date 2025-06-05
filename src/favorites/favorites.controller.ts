@@ -37,8 +37,8 @@ export class FavoritesController {
   }
 
   @Get()
-  findAll() {
-    return this.favoritesService.findAll();
+  getUserFavoriteProducts(@GetUser('id') userId: string) {
+    return this.favoritesService.getUserFavoriteProducts(+userId);
   }
 
   @Get(':id')

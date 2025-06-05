@@ -9,3 +9,7 @@ Authorization: Bearer {{token}}
 {
   "productId": 2
 }
+
+### Listar favoritos do usuário Autenticado
+GET {{base_url}}/favorites
+Authorization: Bearer {{token}}

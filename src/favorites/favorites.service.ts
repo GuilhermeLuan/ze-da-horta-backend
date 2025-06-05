@@ -17,7 +17,9 @@ export class FavoritesService {
   ) {}
 
   async addFavorite(createFavoriteDto: CreateFavoriteDto, userId: number) {
-    await this.productService.findOneOrThrowNotFoundException(createFavoriteDto.productId);
+    await this.productService.findOneOrThrowNotFoundException(
+      createFavoriteDto.productId,
+    );
 
     const clientProfileId =
       await this.userService.findClientProfileByUserId(userId);
@@ -30,8 +32,14 @@ export class FavoritesService {
     return this.favoriteRepository.save(newFavorite);
   }
 
-  findAll() {
-    return `This action returns all favorites`;
+  async getUserFavoriteProducts(userId: number) {
+    const clientProfileId =
+      await this.userService.findClientProfileByUserId(userId);
+
+    return this.favoriteRepository.find({
+      where: { clientProfileId: clientProfileId.id },
+      relations: ['product'],
+    });
   }
 
   findOne(id: number) {
