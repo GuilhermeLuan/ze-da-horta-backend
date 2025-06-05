@@ -11,6 +11,7 @@ import { InventoryItemsModule } from './inventory-items/inventory-items.module';
 import { CartModule } from './cart/cart.module';
 import { AddressModule } from './address/address.module';
 import { OrdersModule } from './orders/orders.module';
+import { FavoritesModule } from './favorites/favorites.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { OrdersModule } from './orders/orders.module';
     CartModule,
     AddressModule,
     OrdersModule,
+    FavoritesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
