@@ -244,7 +244,7 @@ Authorization: Bearer {{token_client}}
 ### Avaliar comprar (falta implementar)
 
 
-### Fluxo do Cliente
+### Fluxo do Cliente - Para o cliente realizar suas ações, ele deve estar autenticado.
 
 ### Registro de cliente
 POST {{baseurl}}/auth/register
@@ -267,7 +267,25 @@ Content-Type: application/json
   "password": "teste123456"
 }
 
-### Favoritos (falta implementar)
+### Favoritos
+
+### Adicionar aos favoritos
+POST {{baseurl}}/favorites
+Content-Type: application/json
+Authorization: Bearer {{token_client}}
+
+{
+  "productId": 2
+}
+
+### Listar favoritos do usuário Autenticado
+GET {{baseurl}}/favorites
+Authorization: Bearer {{token_client}}
+
+### Deletar favorito
+DELETE {{baseurl}}/favorites/14
+Authorization: Bearer {{token_client}}
+Content-Type: application/json
 
 ### Historico de compras
 GET {{baseurl}}/orders

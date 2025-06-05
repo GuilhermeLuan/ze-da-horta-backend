@@ -4,7 +4,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
-import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Favorite } from './entities/favorite.entity';
 import { Repository } from 'typeorm';
@@ -53,14 +52,6 @@ export class FavoritesService {
       where: { clientProfileId: clientProfileId.id },
       relations: ['product'],
     });
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} favorite`;
-  }
-
-  update(id: number, updateFavoriteDto: UpdateFavoriteDto) {
-    return `This action updates a #${id} favorite`;
   }
 
   async removeFavorite(id: number): Promise<void> {
