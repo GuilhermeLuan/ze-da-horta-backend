@@ -49,6 +49,22 @@ export class FavoritesController {
   @ApiBody({
     type: CreateFavoriteDto,
     description: 'Dados do produto a ser adicionado aos favoritos',
+    examples: {
+      basicFavorite: {
+        summary: 'Favorito básico',
+        description: 'Um exemplo de favorito simples',
+        value: {
+          productId: 1,
+        },
+      },
+      multipleFavorites: {
+        summary: 'Múltiplos favoritos',
+        description: 'Exemplo de adicionar vários produtos aos favoritos',
+        value: {
+          productId: 5,
+        },
+      },
+    },
   })
   @ApiResponse({
     status: HttpStatus.CREATED,
