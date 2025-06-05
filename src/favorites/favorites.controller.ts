@@ -55,7 +55,7 @@ export class FavoritesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.favoritesService.remove(+id);
+  remove(@Param('id') favoriteId: string) {
+    return this.favoritesService.removeFavorite(+favoriteId);
   }
 }

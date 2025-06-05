@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -59,8 +63,20 @@ export class FavoritesService {
     return `This action updates a #${id} favorite`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} favorite`;
+  async removeFavorite(id: number): Promise<void> {
+    await this.assertThatFavoriteExists(id);
+
+    await this.favoriteRepository.delete(id);
+  }
+
+  async assertThatFavoriteExists(id: number): Promise<void> {
+    const favorite = await this.favoriteRepository.findOne({
+      where: { id: id },
+    });
+
+    if (!favorite) {
+      throw new NotFoundException(`Favorite with id ${id} not found`);
+    }
   }
 
   private async validateIfProductIsAlreadyFavorite(
