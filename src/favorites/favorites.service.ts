@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -6,6 +6,7 @@ import { Favorite } from './entities/favorite.entity';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../products/products.service';
 import { UserService } from '../user/user.service';
+import { ClientProfile } from '../user/entities/client-profile.entity';
 
 @Injectable()
 export class FavoritesService {
@@ -16,13 +17,21 @@ export class FavoritesService {
     private readonly userService: UserService,
   ) {}
 
-  async addFavorite(createFavoriteDto: CreateFavoriteDto, userId: number) {
+  async addFavorite(
+    createFavoriteDto: CreateFavoriteDto,
+    userId: number,
+  ): Promise<Favorite> {
     await this.productService.findOneOrThrowNotFoundException(
       createFavoriteDto.productId,
     );
 
     const clientProfileId =
       await this.userService.findClientProfileByUserId(userId);
+
+    await this.validateIfProductIsAlreadyFavorite(
+      clientProfileId,
+      createFavoriteDto,
+    );
 
     const newFavorite = this.favoriteRepository.create({
       ...createFavoriteDto,
@@ -52,5 +61,21 @@ export class FavoritesService {
 
   remove(id: number) {
     return `This action removes a #${id} favorite`;
+  }
+
+  private async validateIfProductIsAlreadyFavorite(
+    clientProfileId: ClientProfile,
+    createFavoriteDto: CreateFavoriteDto,
+  ) {
+    const existingFavorite = await this.favoriteRepository.findOne({
+      where: {
+        clientProfileId: clientProfileId.id,
+        productId: createFavoriteDto.productId,
+      },
+    });
+
+    if (existingFavorite) {
+      throw new ConflictException('Product is already in favorites');
+    }
   }
 }
