@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Favorite } from './entities/favorite.entity';
 import { Repository } from 'typeorm';
 import { ProductsService } from '../products/products.service';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class FavoritesService {
@@ -12,14 +13,18 @@ export class FavoritesService {
     @InjectRepository(Favorite)
     private readonly favoriteRepository: Repository<Favorite>,
     private readonly productService: ProductsService,
+    private readonly userService: UserService,
   ) {}
 
   async addFavorite(createFavoriteDto: CreateFavoriteDto, userId: number) {
     await this.productService.findOne(createFavoriteDto.productId);
 
+    const clientProfileId =
+      await this.userService.findClientProfileByUserId(userId);
+
     const newFavorite = this.favoriteRepository.create({
       ...createFavoriteDto,
-      clientProfileId: userId,
+      clientProfileId: clientProfileId.id,
     });
 
     return this.favoriteRepository.save(newFavorite);
