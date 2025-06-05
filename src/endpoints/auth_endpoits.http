@@ -4,10 +4,10 @@ Content-Type: application/json
 
 {
   "name": "Guilherme Luan",
-  "email": "guilhermeluan1@pm.me",
+  "email": "guilhermeluan11@pm.me",
   "password": "teste123456",
   "role": "cliente",
-  "cpf": "1234566781717"
+  "cpf": "12345667817171"
 }
 
 ### Realizar login - Cliente
@@ -15,7 +15,7 @@ POST http://localhost:3000/auth/login
 Content-Type: application/json
 
 {
-  "email": "guilhermeluan1@pm.me",
+  "email": "guilhermeluan11@pm.me",
   "password": "teste123456"
 }
 

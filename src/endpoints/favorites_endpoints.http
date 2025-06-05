@@ -1,4 +1,4 @@
-@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsInVzZXIiOiJndWlsaGVybWVsdWFuMUBwbS5tZSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MTM4MTExLCJleHAiOjE3NDkxNDE3MTF9.KYiYAOeUeeuvr8LKJiN26EVuw9Kypt-6HBUyn1c-We4
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXIiOiJndWlsaGVybWVsdWFuMTFAcG0ubWUiLCJyb2xlIjoiY2xpZW50ZSIsImlhdCI6MTc0OTE0NTcxNSwiZXhwIjoxNzQ5MTQ5MzE1fQ.c8tZpWemour5OJdzw5Vb2E6l-1QitdWrlXOfiGz96TE
 @base_url=http://localhost:3000
 
 ### Adicionar aos favoritos
@@ -15,6 +15,6 @@ GET {{base_url}}/favorites
 Authorization: Bearer {{token}}
 
 ### Deletar favorito
-DELETE {{base_url}}/favorites/11
+DELETE {{base_url}}/favorites/16
 Authorization: Bearer {{token}}
 Content-Type: application/json
