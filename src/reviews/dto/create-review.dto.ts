@@ -1,23 +1,15 @@
-import {
-  IsNotEmpty,
-  IsNumber,
-  IsOptional,
-  IsString,
-  Max,
-  Min,
-} from 'class-validator';
+import { IsNumber, IsString, IsOptional, Min, Max } from 'class-validator';
 
 export class CreateReviewDto {
-  @IsNumber({}, { message: 'A avaliação deve ser um número.' })
-  @Min(1, { message: 'A avaliação deve ser no mínimo 1.' })
-  @Max(5, { message: 'A avaliação deve ser no máximo 5.' })
+  @IsNumber()
+  orderId: number;
+
+  @IsNumber()
+  @Min(1)
+  @Max(5)
   rating: number;
 
+  @IsString()
   @IsOptional()
-  @IsString({ message: 'O comentário deve ser um texto.' })
   comment?: string;
-
-  @IsNumber({}, { message: 'O ID do pedido deve ser um número.' })
-  @IsNotEmpty({ message: 'O ID do pedido é obrigatório.' })
-  orderId: number;
 }

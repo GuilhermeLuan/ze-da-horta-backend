@@ -1,0 +1,13 @@
+@token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXIiOiJjbGllbnRlM0BtYWlsLmNvbSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MTUzNTk2LCJleHAiOjE3NDkxNTcxOTZ9.pL7oaCMMpomz3YA404YLKh9V3sKmo3-YBNHWWkowXk0
+@base_url=http://localhost:3000
+
+### Criar uma avaliação
+POST {{base_url}}/reviews
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "orderId": 1,
+  "rating": 5,
+  "comment": "Ótimo produto, chegou muito bem embalado!"
+} 

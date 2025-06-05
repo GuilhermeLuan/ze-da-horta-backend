@@ -273,7 +273,7 @@ Content-Type: application/json
 }
 
 ### Login
-POST {{baseurl}}/auth/login
+POST {{baseurl}}/auth/loginw
 Content-Type: application/json
 
 {

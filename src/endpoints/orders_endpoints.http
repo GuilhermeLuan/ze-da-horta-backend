@@ -1,4 +1,4 @@
-@token_client=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXIiOiJndWlsaGVybWVsdWFuQHBtLm1lIiwicm9sZSI6ImNsaWVudGUiLCJpYXQiOjE3NDkwNTc4ODgsImV4cCI6MTc0OTA2MTQ4OH0.T45Y7xbNQpOao1cmbMDjnzFLVIEk8roCTVpo8zeLKls
+@token_client=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXIiOiJjbGllbnRlM0BtYWlsLmNvbSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MTUzNTk2LCJleHAiOjE3NDkxNTcxOTZ9.pL7oaCMMpomz3YA404YLKh9V3sKmo3-YBNHWWkowXk0
 @token_producer=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXIiOiJndWlsaGVybWVsdWFucHJvZHV0b3IxMUBwbS5tZSIsInJvbGUiOiJwcm9kdXRvciIsImlhdCI6MTc0OTA1NTc0NywiZXhwIjoxNzQ5MDU5MzQ3fQ.7WS1UCvCs_6i6nzQzdv_Ek0a0JVaVVpWqKNG7BYuZw0
 @baseurl=http://localhost:3000
 
@@ -29,7 +29,6 @@ Content-Type: application/json
 Authorization: Bearer {{token_client}}
 
 {
-  "deliveryAddressId": 2,
   "notes": "Entregar no portão"
 }
 
