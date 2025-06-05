@@ -154,7 +154,7 @@ export class OrdersService {
     });
   }
 
-  async findOne(
+  async findOneOrThrownNotFoundException(
     id: number,
     userId: number,
     userRole: UserRole,
@@ -207,7 +207,11 @@ export class OrdersService {
     status: OrderStatus,
     userId: number,
   ): Promise<Order> {
-    const order = await this.findOne(id, userId, UserRole.PRODUCER);
+    const order = await this.findOneOrThrownNotFoundException(
+      id,
+      userId,
+      UserRole.PRODUCER,
+    );
 
     // Validar transições de status
     const validTransitions = this.getValidStatusTransitions(order.status);
@@ -235,13 +239,21 @@ export class OrdersService {
     updateOrderDto: UpdateOrderDto,
     userId: number,
   ): Promise<Order> {
-    const order = await this.findOne(id, userId, UserRole.CLIENT);
+    const order = await this.findOneOrThrownNotFoundException(
+      id,
+      userId,
+      UserRole.CLIENT,
+    );
 
     return this.orderRepository.save(order);
   }
 
   async remove(id: number, userId: number): Promise<void> {
-    const order = await this.findOne(id, userId, UserRole.CLIENT);
+    const order = await this.findOneOrThrownNotFoundException(
+      id,
+      userId,
+      UserRole.CLIENT,
+    );
 
     // Apenas pedidos pendentes podem ser cancelados/removidos
     if (order.status !== OrderStatus.PENDING) {
@@ -255,7 +267,11 @@ export class OrdersService {
   }
 
   async cancelOrder(id: number, userId: number): Promise<Order> {
-    const order = await this.findOne(id, userId, UserRole.CLIENT);
+    const order = await this.findOneOrThrownNotFoundException(
+      id,
+      userId,
+      UserRole.CLIENT,
+    );
 
     // Verificar se o pedido pode ser cancelado
     if ([OrderStatus.DELIVERED, OrderStatus.CANCELED].includes(order.status)) {
