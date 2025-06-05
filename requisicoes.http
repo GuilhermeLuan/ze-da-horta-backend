@@ -1,6 +1,6 @@
 @baseurl=http://localhost:3000
-@token_lojista=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInVzZXIiOiJwcm9kdXRvcjNAbWFpbC5jb20iLCJyb2xlIjoicHJvZHV0b3IiLCJpYXQiOjE3NDkxNDg1ODAsImV4cCI6MTc0OTE1MjE4MH0.tVghgWalU8TlAMPYa0yUzn7KI-OT-aQvf33ZT0C87V0
-@token_client=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsInVzZXIiOiJjbGllbnRlM0BtYWlsLmNvbSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MTQ4Nzg0LCJleHAiOjE3NDkxNTIzODR9.nPngBfV8uwdAIL5xe5l_GhepHnnr1jiKIvJ5I-f47QA
+@token_lojista=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXIiOiJwcm9kdXRvcjNAbWFpbC5jb20iLCJyb2xlIjoicHJvZHV0b3IiLCJpYXQiOjE3NDkxNTYxNjUsImV4cCI6MTc0OTE1OTc2NX0.4EgtxzODPeCxomdUc2sQ0tdg0gvkdmXRKxczmzwyBp0
+@token_client=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInVzZXIiOiJjbGllbnRlM0BtYWlsLmNvbSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MTU2MjQzLCJleHAiOjE3NDkxNTk4NDN9.ayigGc_tr8iuL6IYxTQPHNCV6q8ihb4wbdImFMwmYn4
 
 
 ### Fluxo de Auth
@@ -255,8 +255,34 @@ Authorization: Bearer {{token_client}}
 GET {{baseurl}}/orders
 Authorization: Bearer {{token_client}}
 
-### Avaliar comprar (falta implementar)
+### Avaliar comprar
+POST {{baseurl}}/reviews
+Content-Type: application/json
+Authorization: Bearer {{token_client}}
 
+{
+  "orderId": 1,
+  "rating": 5,
+  "comment": "Ótimo produto, chegou muito bem embalado!"
+}
+
+### Listar avaliações do usuário authenticado
+GET {{baseurl}}/reviews
+Authorization: Bearer {{token_client}}
+
+### Atulizar uma avaliação
+PATCH {{baseurl}}/reviews/1
+Content-Type: application/json
+Authorization: Bearer {{token_client}}
+
+{
+  "rating": 4,
+  "comment": "Produto bom, mas poderia ser melhor."
+}
+
+### Deletar uma avaliação
+DELETE {{baseurl}}/reviews/1
+Authorization: Bearer {{token_client}}
 
 ### Fluxo do Cliente - Para o cliente realizar suas ações, ele deve estar autenticado.
 

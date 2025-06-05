@@ -25,3 +25,7 @@ Authorization: Bearer {{token}}
   "rating": 4,
   "comment": "Produto bom, mas poderia ser melhor."
 }
+
+### Deletar uma avaliação
+DELETE {{base_url}}/reviews/1
+Authorization: Bearer {{token}}
