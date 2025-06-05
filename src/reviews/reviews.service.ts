@@ -63,8 +63,18 @@ export class ReviewsService {
     return review;
   }
 
-  update(id: number, updateReviewDto: UpdateReviewDto) {
-    return `This action updates a #${id} review`;
+  async update(
+    reviewId: number,
+    userId: number,
+    updateReviewDto: UpdateReviewDto,
+  ) {
+    const reviewToUpdate = await this.findOneOrThrowNotFoundException(reviewId);
+
+    await this.userService.findClientProfileByUserId(userId);
+
+    Object.assign(reviewToUpdate, updateReviewDto);
+
+    return this.reviewsRepository.save(reviewToUpdate);
   }
 
   remove(id: number) {

@@ -15,3 +15,13 @@ Authorization: Bearer {{token}}
 ### Listar avaliações do usuário authenticado
 GET {{base_url}}/reviews
 Authorization: Bearer {{token}}
+
+### Atulizar uma avaliação
+PATCH {{base_url}}/reviews/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "rating": 4,
+  "comment": "Produto bom, mas poderia ser melhor."
+}

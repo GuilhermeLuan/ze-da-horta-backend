@@ -41,8 +41,12 @@ export class ReviewsController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
-    return this.reviewsService.update(+id, updateReviewDto);
+  update(
+    @Param('id') reviewId: string,
+    @GetUser('id') userId: string,
+    @Body() updateReviewDto: UpdateReviewDto,
+  ) {
+    return this.reviewsService.update(+reviewId, +userId, updateReviewDto);
   }
 
   @Delete(':id')
