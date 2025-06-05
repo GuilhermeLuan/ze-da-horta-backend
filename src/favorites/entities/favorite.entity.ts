@@ -22,7 +22,7 @@ export class Favorite {
   @ManyToOne(() => ClientProfile, (clientProfile) => clientProfile.favorites, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'clienteId' })
+  @JoinColumn({ name: 'clientProfileId' })
   clientProfile: ClientProfile;
 
   @ManyToOne(() => Product, (product: Product) => product.favorites, {
