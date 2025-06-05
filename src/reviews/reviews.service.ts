@@ -77,7 +77,8 @@ export class ReviewsService {
     return this.reviewsRepository.save(reviewToUpdate);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} review`;
+  async remove(reviewId: number) {
+    await this.findOneOrThrowNotFoundException(reviewId);
+    await this.reviewsRepository.delete(reviewId);
   }
 }
