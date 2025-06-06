@@ -1,6 +1,6 @@
 @baseurl=http://localhost:3000
-@token_lojista=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXIiOiJwcm9kdXRvcjNAbWFpbC5jb20iLCJyb2xlIjoicHJvZHV0b3IiLCJpYXQiOjE3NDkxNTYxNjUsImV4cCI6MTc0OTE1OTc2NX0.4EgtxzODPeCxomdUc2sQ0tdg0gvkdmXRKxczmzwyBp0
-@token_client=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjUsInVzZXIiOiJjbGllbnRlM0BtYWlsLmNvbSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MTU2MjQzLCJleHAiOjE3NDkxNTk4NDN9.ayigGc_tr8iuL6IYxTQPHNCV6q8ihb4wbdImFMwmYn4
+@token_lojista=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXIiOiJwcm9kdXRvcjNAbWFpbC5jb20iLCJyb2xlIjoicHJvZHV0b3IiLCJpYXQiOjE3NDkyMTkyODYsImV4cCI6MTc0OTIyMjg4Nn0.dP9VWg1ibRG3p0ZI14FhnDAHQluTWY0We3V7ai3ht_I
+@token_client=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXIiOiJjbGllbnRlM0BtYWlsLmNvbSIsInJvbGUiOiJjbGllbnRlIiwiaWF0IjoxNzQ5MjE5Mzg1LCJleHAiOjE3NDkyMjI5ODV9.QtDgA1BpaNn_mFIrytJmTziBL7ysC3nytL7mc-0imLU
 
 
 ### Fluxo de Auth
@@ -30,27 +30,14 @@ Content-Type: application/json
   "cnpj": "1234566781711127"
 }
 
-### Entregador
-POST {{baseurl}}/auth/register
-Content-Type: application/json
-
-{
-  "name": "Entregador 1",
-  "email": "entregador@mail.com",
-  "password": "entregador123",
-  "role": "entregador",
-  "cpf": "123123121",
-  "vehicleType": "BICYCLE"
-}
-
 ### Login
 
 POST {{baseurl}}/auth/login
 Content-Type: application/json
 
 {
-  "email": "entregador@mail.com",
-  "password": "entregador123"
+  "email": "produto1@mail.com",
+  "password": "produtor123"
 }
 
 ### Fluxo do Lojista (Produtor)

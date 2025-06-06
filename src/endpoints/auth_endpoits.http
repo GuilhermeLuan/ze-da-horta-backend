@@ -28,7 +28,7 @@ Content-Type: application/json
   "email": "guilhermeluanprodutor11@pm.me",
   "password": "teste123456",
   "role": "produtor",
-  "cnpj": "1234566781711127"
+  "cnpj": "12345667817111271"
 }
 
 ### Realizar cadastro do tipo Entregador com Bicicleta
