@@ -1,14 +1,5 @@
 # Zé da Horta - Backend
 
-## Integrantes do Grupo
-
-    Guilherme Luan Silva dos Reis - UC23200423
-    Gabriel Victor Vidal de Sales - UC23200816
-    Guilherme Basilio Silva Felix Xavier - UCUC23200149
-    Guilherme Soares - UC23101914
-    Flávio Oliveira Morais Leite - UC23101606
-
-
 ## Descrição
 Backend do sistema Zé da Horta, uma plataforma que conecta produtores rurais diretamente aos consumidores, facilitando a venda e compra de produtos orgânicos e frescos.
 
